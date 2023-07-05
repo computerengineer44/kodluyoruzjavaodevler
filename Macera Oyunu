@@ -1,0 +1,69 @@
+import java.util.Scanner;
+
+public class MaceraOyunu {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Adınızı girin: ");
+        String playerName = scanner.nextLine();
+
+        System.out.println("Hoş geldiniz, " + playerName + "! Maceraya başlayalım!");
+
+        int health = 100;
+        int potionCount = 3;
+        boolean keyFound = false;
+
+        while (health > 0) {
+            System.out.println("\n--- Seçenekler ---");
+            System.out.println("1. Bir yaratıkla savaş");
+            System.out.println("2. Bir şişe iyileştirici iç");
+            System.out.println("3. Gizli bir anahtar bul");
+            System.out.println("4. Oyundan çık");
+
+            System.out.print("Seçiminizi yapın: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("\nBir yaratıkla savaşıyorsunuz!");
+                    int damageTaken = randomInt(10, 20);
+                    health -= damageTaken;
+                    System.out.println("Canınız " + damageTaken + " kadar azaldı.");
+                    break;
+                case 2:
+                    if (potionCount > 0) {
+                        int healingAmount = randomInt(20, 30);
+                        health += healingAmount;
+                        potionCount--;
+                        System.out.println("\nİyileştirici içtiniz ve canınız " + healingAmount + " kadar arttı.");
+                        System.out.println("Kalan iyileştirici sayısı: " + potionCount);
+                    } else {
+                        System.out.println("\nYeterli iyileştirici şişeniz yok!");
+                    }
+                    break;
+                case 3:
+                    if (!keyFound) {
+                        keyFound = true;
+                        System.out.println("\nGizli bir anahtar buldunuz! Kapıları açabilirsiniz.");
+                    } else {
+                        System.out.println("\nZaten bir anahtar buldunuz!");
+                    }
+                    break;
+                case 4:
+                    System.out.println("\nOyundan çıkılıyor...");
+                    return;
+                default:
+                    System.out.println("\nGeçersiz seçim! Lütfen tekrar deneyin.");
+                    break;
+            }
+
+            if (health <= 0) {
+                System.out.println(playerName + ", maalesef öldünüz. Oyun bitti!");
+            }
+        }
+    }
+
+    private static int randomInt(int min, int max) {
+        return (int) (Math.random() * (max - min + 1)) + min;
+    }
+}

@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Sayı Giriniz: ");
+        int number = input.nextInt();
+        
+        int tempNumber = number;
+        int total = 0;
+        int digitCount = String.valueOf(number).length();
+        
+        while (tempNumber != 0) {
+            int digit = tempNumber % 10;
+            total += Math.pow(digit, digitCount);
+            tempNumber /= 10;
+        }
+        
+        if (total == number) {
+            System.out.println(number + " sayısı bir Armstrong sayısıdır.");
+        } else {
+            System.out.println(number + " sayısı bir Armstrong sayısı değildir.");
+        }
+    }
+}

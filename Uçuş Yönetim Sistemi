@@ -1,0 +1,112 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Flight {
+    private String flightNumber;
+    private String origin;
+    private String destination;
+    private String departureTime;
+    
+    public Flight(String flightNumber, String origin, String destination, String departureTime) {
+        this.flightNumber = flightNumber;
+        this.origin = origin;
+        this.destination = destination;
+        this.departureTime = departureTime;
+    }
+    
+    public String getFlightNumber() {
+        return flightNumber;
+    }
+    
+    public String getOrigin() {
+        return origin;
+    }
+    
+    public String getDestination() {
+        return destination;
+    }
+    
+    public String getDepartureTime() {
+        return departureTime;
+    }
+}
+
+class FlightManagementSystem {
+    private List<Flight> flights;
+    
+    public FlightManagementSystem() {
+        flights = new ArrayList<>();
+    }
+    
+    public void addFlight(String flightNumber, String origin, String destination, String departureTime) {
+        Flight flight = new Flight(flightNumber, origin, destination, departureTime);
+        flights.add(flight);
+        System.out.println("Uçuş eklendi: " + flight.getFlightNumber() + " (" + flight.getOrigin() + " - " + flight.getDestination() + ")");
+    }
+    
+    public void searchFlight(String origin, String destination) {
+        List<Flight> matchingFlights = new ArrayList<>();
+        
+        for (Flight flight : flights) {
+            if (flight.getOrigin().equalsIgnoreCase(origin) && flight.getDestination().equalsIgnoreCase(destination)) {
+                matchingFlights.add(flight);
+            }
+        }
+        
+        if (matchingFlights.isEmpty()) {
+            System.out.println("Eşleşen uçuş bulunamadı.");
+        } else {
+            System.out.println("Eşleşen uçuşlar:");
+            for (Flight flight : matchingFlights) {
+                System.out.println("- " + flight.getFlightNumber() + " (" + flight.getOrigin() + " - " + flight.getDestination() + ")");
+            }
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        FlightManagementSystem flightManagementSystem = new FlightManagementSystem();
+        
+        while (true) {
+            System.out.println("1. Uçuş Ekle");
+            System.out.println("2. Uçuşları Ara");
+            System.out.println("3. Çıkış");
+            System.out.print("Seçiminizi yapın (1-3): ");
+            int choice = scanner.nextInt();
+            
+            switch (choice) {
+                case 1:
+                    scanner.nextLine();
+                    System.out.print("Uçuş Numarası: ");
+                    String flightNumber = scanner.nextLine();
+                    System.out.print("Kalkış Yeri: ");
+                    String origin = scanner.nextLine();
+                    System.out.print("Varış Yeri: ");
+                    String destination = scanner.nextLine();
+                    System.out.print("Kalkış Zamanı: ");
+                    String departureTime = scanner.nextLine();
+                    flightManagementSystem.addFlight(flightNumber, origin, destination, departureTime);
+                    break;
+                case 2:
+                    scanner.nextLine();
+                    System.out.print("Kalkış Yeri: ");
+                    String searchOrigin = scanner.nextLine();
+                    System.out.print("Varış Yeri: ");
+                    String searchDestination = scanner.nextLine();
+                    flightManagementSystem.searchFlight(searchOrigin, searchDestination);
+                    break;
+                case 3:
+                    System.out.println("Çıkış yapılıyor...");
+                    return;
+                default:
+                    System.out.println("Geçersiz bir seçim yaptınız. Lütfen tekrar deneyin.");
+                    break;
+            }
+            
+            System.out.println();
+        }
+    }
+}

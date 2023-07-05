@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+public class UsHesabi {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Taban değerini giriniz: ");
+        int taban = scanner.nextInt();
+
+        System.out.print("Üs değerini giriniz: ");
+        int us = scanner.nextInt();
+
+        int sonuc = usHesapla(taban, us);
+        System.out.println("Sonuç: " + sonuc);
+
+        scanner.close();
+    }
+
+    public static int usHesapla(int taban, int us) {
+        int sonuc = 1;
+
+        for (int i = 0; i < us; i++) {
+            sonuc *= taban;
+        }
+
+        return sonuc;
+    }
+}

@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+public class SinifGecmeNotu {
+    public static void main(String[] args) {
+        String[] dersler = {"Matematik", "Fizik", "Türkçe", "Kimya", "Müzik"};
+        int gecmeNotu = 55;
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        double toplamNot = 0;
+        int dersSayisi = 0;
+        
+        for (String ders : dersler) {
+            System.out.print(ders + " notunu giriniz: ");
+            int not = scanner.nextInt();
+            
+            if (not >= 0 && not <= 100) {
+                toplamNot += not;
+                dersSayisi++;
+            }
+        }
+        
+        scanner.close();
+        
+        if (dersSayisi > 0) {
+            double ortalama = toplamNot / dersSayisi;
+            
+            System.out.println("Ortalama: " + ortalama);
+            
+            if (ortalama >= gecmeNotu) {
+                System.out.println("Sınıfı geçtiniz.");
+            } else {
+                System.out.println("Sınıfta kaldınız.");
+            }
+        } else {
+            System.out.println("Geçerli not girilmedi.");
+        }
+    }
+}

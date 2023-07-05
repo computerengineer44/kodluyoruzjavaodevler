@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class UcakBiletiHesaplamaProgrami {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Mesafe ve yaşı kullanıcıdan alınacak değişkenler
+        int mesafe, yas;
+        
+        System.out.print("Seyahat mesafesini girin (km): ");
+        mesafe = scanner.nextInt();
+        
+        System.out.print("Yolcu yaşını girin: ");
+        yas = scanner.nextInt();
+        
+        double normalFiyat = mesafe * 0.10; // Mesafe başına sabit fiyat
+        
+        // Yaş indirimini hesaplayan kod bloğu
+        if (yas < 12) {
+            normalFiyat -= normalFiyat * 0.5; // %50 indirim
+        } else if (yas >= 12 && yas <= 24) {
+            normalFiyat -= normalFiyat * 0.1; // %10 indirim
+        } else if (yas >= 65) {
+            normalFiyat -= normalFiyat * 0.3; // %30 indirim
+        }
+        
+        // Ekonomi veya business class seçimini alan ve buna göre fiyatı güncelleyen kod bloğu
+        System.out.print("Economy class için 1, Business class için 2 girin: ");
+        int sinifSecimi = scanner.nextInt();
+        
+        double toplamTutar = normalFiyat;
+        
+        if (sinifSecimi == 2) {
+            toplamTutar += toplamTutar * 0.5; // Business class için %50 artış
+        }
+        
+        System.out.println("Toplam tutar: " + toplamTutar + " TL");
+        
+        scanner.close();
+    }
+}

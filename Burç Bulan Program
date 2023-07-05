@@ -1,0 +1,34 @@
+gun = int(input("Doğum gününüzü girin: "))
+ay = int(input("Doğum ayınızı girin: "))
+
+burc = ""
+
+if (ay == 3 and gun >= 21) or (ay == 4 and gun <= 20):
+    burc = "Koç"
+elif (ay == 4 and gun >= 21) or (ay == 5 and gun <= 21):
+    burc = "Boğa"
+elif (ay == 5 and gun >= 22) or (ay == 6 and gun <= 22):
+    burc = "İkizler"
+elif (ay == 6 and gun >= 23) or (ay == 7 and gun <= 22):
+    burc = "Yengeç"
+elif (ay == 7 and gun >= 23) or (ay == 8 and gun <= 22):
+    burc = "Aslan"
+elif (ay == 8 and gun >= 23) or (ay == 9 and gun <= 22):
+    burc = "Başak"
+elif (ay == 9 and gun >= 23) or (ay == 10 and gun <= 22):
+    burc = "Terazi"
+elif (ay == 10 and gun >= 23) or (ay == 11 and gun <= 21):
+    burc = "Akrep"
+elif (ay == 11 and gun >= 22) or (ay == 12 and gun <= 21):
+    burc = "Yay"
+elif (ay == 12 and gun >= 22) or (ay == 1 and gun <= 21):
+    burc = "Oğlak"
+elif (ay == 1 and gun >= 22) or (ay == 2 and gun <= 19):
+    burc = "Kova"
+elif (ay == 2 and gun >= 20) or (ay == 3 and gun <= 20):
+    burc = "Balık"
+else:
+    print("Geçersiz doğum günü veya ayı girişi.")
+    exit(0)
+
+print("Burcunuz:", burc)

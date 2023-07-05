@@ -1,0 +1,106 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Animal {
+    private String name;
+    private String species;
+    
+    public Animal(String name, String species) {
+        this.name = name;
+        this.species = species;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public String getSpecies() {
+        return species;
+    }
+}
+
+class Zoo {
+    private List<Animal> animals;
+    
+    public Zoo() {
+        animals = new ArrayList<>();
+    }
+    
+    public void addAnimal(String name, String species) {
+        Animal animal = new Animal(name, species);
+        animals.add(animal);
+        System.out.println("Hayvan eklendi: " + animal.getName() + " (" + animal.getSpecies() + ")");
+    }
+    
+    public void listAnimals() {
+        if (animals.isEmpty()) {
+            System.out.println("Hayvan yok.");
+        } else {
+            System.out.println("Hayvanlar:");
+            for (Animal animal : animals) {
+                System.out.println("- " + animal.getName() + " (" + animal.getSpecies() + ")");
+            }
+        }
+    }
+    
+    public void removeAnimal(String name) {
+        boolean removed = false;
+        for (int i = 0; i < animals.size(); i++) {
+            if (animals.get(i).getName().equalsIgnoreCase(name)) {
+                animals.remove(i);
+                System.out.println("Hayvan silindi: " + name);
+                removed = true;
+                break;
+            }
+        }
+        
+        if (!removed) {
+            System.out.println("Hayvan bulunamadı: " + name);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Zoo zoo = new Zoo();
+        
+        while (true) {
+            System.out.println("1. Hayvan Ekle");
+            System.out.println("2. Hayvanları Listele");
+            System.out.println("3. Hayvan Sil");
+            System.out.println("4. Çıkış");
+            System.out.print("Seçiminizi yapın (1-4): ");
+            int choice = scanner.nextInt();
+            
+            switch (choice) {
+                case 1:
+                    scanner.nextLine();
+                    System.out.print("Hayvan Adı: ");
+                    String animalName = scanner.nextLine();
+                    System.out.print("Hayvan Türü: ");
+                    String animalSpecies = scanner.nextLine();
+                    zoo.addAnimal(animalName, animalSpecies);
+                    break;
+                case 2:
+                    zoo.listAnimals();
+                    break;
+                case 3:
+                    scanner.nextLine();
+                    System.out.print("Silinecek Hayvan Adı: ");
+                    String removeAnimalName = scanner.nextLine();
+                    zoo.removeAnimal(removeAnimalName);
+                    break;
+                case 4:
+                    System.out.println("Çıkış yapılıyor...");
+                    return;
+                default:
+                    System.out.println("Geçersiz bir seçim yaptınız. Lütfen tekrar deneyin.");
+                    break;
+            }
+            
+            System.out.println();
+        }
+    }
+}

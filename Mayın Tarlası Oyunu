@@ -1,0 +1,143 @@
+import java.util.Scanner;
+
+public class MineSweeper {
+    private int[][] mineField;
+    private boolean[][] revealed;
+    private int numMines;
+    private int numFields;
+    private int size;
+
+    public MineSweeper(int size) {
+        this.size = size;
+        this.numFields = size * size;
+        this.numMines = numFields / 4;
+        this.mineField = new int[size][size];
+        this.revealed = new boolean[size][size];
+        initializeField();
+        placeMines();
+    }
+
+    private void initializeField() {
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                mineField[row][col] = 0;
+                revealed[row][col] = false;
+            }
+        }
+    }
+
+    private void placeMines() {
+        int count = 0;
+        while (count < numMines) {
+            int row = (int) (Math.random() * size);
+            int col = (int) (Math.random() * size);
+            if (mineField[row][col] != -1) {
+                mineField[row][col] = -1;
+                count++;
+            }
+        }
+    }
+
+    private boolean isValid(int row, int col) {
+        return (row >= 0 && row < size && col >= 0 && col < size);
+    }
+
+    private int countAdjacentMines(int row, int col) {
+        int count = 0;
+        int[] dr = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dc = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+        for (int i = 0; i < 8; i++) {
+            int newRow = row + dr[i];
+            int newCol = col + dc[i];
+            if (isValid(newRow, newCol) && mineField[newRow][newCol] == -1) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    private void revealEmptyFields(int row, int col) {
+        if (isValid(row, col) && !revealed[row][col]) {
+            revealed[row][col] = true;
+            if (mineField[row][col] == 0) {
+                int[] dr = {-1, -1, -1, 0, 0, 1, 1, 1};
+                int[] dc = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+                for (int i = 0; i < 8; i++) {
+                    int newRow = row + dr[i];
+                    int newCol = col + dc[i];
+                    revealEmptyFields(newRow, newCol);
+                }
+            }
+        }
+    }
+
+    public void play() {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            printField();
+            System.out.print("Satır Giriniz: ");
+            int row = scanner.nextInt();
+            System.out.print("Sütun Giriniz: ");
+            int col = scanner.nextInt();
+
+            if (!isValid(row, col)) {
+                System.out.println("Hatalı giriş! Lütfen geçerli bir konum girin.");
+                continue;
+            }
+
+            if (mineField[row][col] == -1) {
+                System.out.println("Game Over!!");
+                break;
+            }
+
+            revealEmptyFields(row, col);
+
+            if (countRevealedFields() == numFields - numMines) {
+                System.out.println("Oyunu Kazandınız!");
+                break;
+            }
+        }
+
+        scanner.close();
+    }
+
+    private int countRevealedFields() {
+        int count = 0;
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                if (revealed[row][col]) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    private void printField() {
+        System.out.println("Mayın Tarlası Oyuna Hoşgeldiniz!");
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                if (revealed[row][col]) {
+                    if (mineField[row][col] == -1) {
+                        System.out.print("* ");
+                    } else {
+                        System.out.print(mineField[row[col] + " ");
+}
+} else {
+System.out.print("- ");
+}
+}
+System.out.println();
+}
+System.out.println("===========================");
+}
+
+public static void main(String[] args) {
+    int size = 3; // Örnek için 3x3 bir oyun alanı kullanalım
+    MineSweeper game = new MineSweeper(size);
+    game.play();
+}

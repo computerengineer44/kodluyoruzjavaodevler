@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Bir sayı girin: ");
+        int n = scanner.nextInt();
+        
+        System.out.println("Girilen sayıdan küçük 2'nin kuvvetleri:");
+        
+        int power = 1;
+        
+        while (power < n) {
+            System.out.print(power + " ");
+            power *= 2;
+        }
+    }
+}

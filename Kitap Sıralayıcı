@@ -1,0 +1,55 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+class Kitap {
+    private String ad;
+    private String yazar;
+    private int yayinYili;
+
+    public Kitap(String ad, String yazar, int yayinYili) {
+        this.ad = ad;
+        this.yazar = yazar;
+        this.yayinYili = yayinYili;
+    }
+
+    public String getAd() {
+        return ad;
+    }
+
+    public String getYazar() {
+        return yazar;
+    }
+
+    public int getYayinYili() {
+        return yayinYili;
+    }
+}
+
+class YayinYiliComparator implements Comparator<Kitap> {
+    @Override
+    public int compare(Kitap k1, Kitap k2) {
+        return k1.getYayinYili() - k2.getYayinYili();
+    }
+}
+
+public class KitapSirayici {
+    public static void main(String[] args) {
+        // Kitap listesini oluşturalım
+        List<Kitap> kitapListesi = new ArrayList<>();
+        kitapListesi.add(new Kitap("Kitap A", "Yazar X", 2000));
+        kitapListesi.add(new Kitap("Kitap B", "Yazar Y", 1995));
+        kitapListesi.add(new Kitap("Kitap C", "Yazar Z", 2010));
+
+        // Kitapları yayın yılına göre sıralayalım
+        Collections.sort(kitapListesi, new YayinYiliComparator());
+
+        // Sıralanmış kitapları ekrana yazdıralım
+        for (Kitap kitap : kitapListesi) {
+            System.out.println("Kitap Adı: " + kitap.getAd() +
+                    ", Yazar: " + kitap.getYazar() +
+                    ", Yayın Yılı: " + kitap.getYayinYili());
+        }
+    }
+}

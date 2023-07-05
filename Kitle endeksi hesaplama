@@ -1,0 +1,20 @@
+import java.util.Scanner;
+
+public class BMICalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Lütfen kilonuzu (kg) girin: ");
+        double weight = scanner.nextDouble();
+
+        System.out.print("Lütfen boyunuzu (metre cinsinden) girin: ");
+        double height = scanner.nextDouble();
+
+        double bmi = calculateBMI(weight, height);
+        System.out.println("Vücut Kitle İndeksi (BMI): " + bmi);
+    }
+
+    public static double calculateBMI(double weight, double height) {
+        return weight / (height * height);
+    }
+}

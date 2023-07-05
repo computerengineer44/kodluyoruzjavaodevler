@@ -1,0 +1,186 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+class Takim {
+    private String ad;
+    private int puan;
+
+    public Takim(String ad) {
+        this.ad = ad;
+        this.puan = 0;
+    }
+
+    public String getAd() {
+        return ad;
+    }
+
+    public int getPuan() {
+        return puan;
+    }
+
+    public void kazandi() {
+        puan += 3;
+    }
+
+    public void berabere() {
+        puan += 1;
+    }
+
+    public void kaybetti() {
+        // Puan değişikliği yapmayabilirsiniz, isteğe bağlıdır.
+    }
+}
+
+class Mac {
+    private Takim evSahibi;
+    private Takim misafir;
+    private int evSahibiSkor;
+    private int misafirSkor;
+    private LocalDate tarih;
+
+    public Mac(Takim evSahibi, Takim misafir, LocalDate tarih) {
+        this.evSahibi = evSahibi;
+        this.misafir = misafir;
+        this.tarih = tarih;
+    }
+
+    public Takim getEvSahibi() {
+        return evSahibi;
+    }
+
+    public Takim getMisafir() {
+        return misafir;
+    }
+
+    public int getEvSahibiSkor() {
+        return evSahibiSkor;
+    }
+
+    public void setEvSahibiSkor(int evSahibiSkor) {
+        this.evSahibiSkor = evSahibiSkor;
+    }
+
+    public int getMisafirSkor() {
+        return misafirSkor;
+    }
+
+    public void setMisafirSkor(int misafirSkor) {
+        this.misafirSkor = misafirSkor;
+    }
+
+    public LocalDate getTarih() {
+        return tarih;
+    }
+}
+
+public class FiksturOlusturucu {
+    private List<Takim> takimlar;
+    private List<Mac> fikstur;
+
+    public FiksturOlusturucu(List<Takim> takimlar) {
+        this.takimlar = takimlar;
+        this.fikstur = new ArrayList<>();
+    }
+
+    public void fiksturOlustur() {
+        int takimSayisi = takimlar.size();
+        int turSayisi = takimSayisi - 1;
+
+        for (int tur = 0; tur < turSayisi; tur++) {
+            Collections.shuffle(takimlar);
+
+            for (int i = 0; i < takimSayisi / 2; i++) {
+                Takim evSahibi = takimlar.get(i);
+                Takim misafir = takimlar.get(i + takimSayisi / 2);
+
+                Mac mac = new Mac(evSahibi, misafir, LocalDate.now().plusDays(tur * 7)); // Her tur bir hafta arayla
+                fikstur.add(mac);
+            }
+
+            // Takımları döndür
+            Takim sonTakim = takimlar.get(takimSayisi - 1);
+            takimlar.remove(takimSayisi - 1);
+            takimlar.add(1, sonTakim);
+        }
+    }
+
+    public void macOynat(int evSahibiSkor, int misafirSkor, int tur) {
+        if (tur < 0 || tur >= fikstur.size()) {
+            System.out.println("Geçersiz tur numarası!");
+            return;
+        }
+
+        Mac mac = fikstur.get(tur);
+        mac.setEvSahibiSkor(evSahibiSkor);
+        mac.setMisafirSkor(misafirSkor);
+
+        Takim evSahibi = mac.getEvSahibi();
+        Takim misafir = mac.getMisafir();
+
+        if (evSahibiSkor > misafirSkor) {
+            evSahibi.kazandi();
+            misafir.kaybetti();
+        } else if (evSahibiSkor < misafirSkor) {
+            evSahibi.kaybetti();
+            misafir.kazandi();
+        } else {
+            evSahibi.berabere();
+            misafir.berabere();
+        }
+    }
+public void fiksturuGoster() {
+System.out.println("FİKSTÜR");
+System.out.println("-------");
+
+    for (int i = 0; i < fikstur.size(); i++) {
+        Mac mac = fikstur.get(i);
+        LocalDate tarih = mac.getTarih();
+        Takim evSahibi = mac.getEvSahibi();
+        Takim misafir = mac.getMisafir();
+
+        System.out.println("Tur " + (i + 1) + ": " + tarih);
+        System.out.println(evSahibi.getAd() + " vs. " + misafir.getAd());
+        System.out.println("Skor: " + evSahibi.getAd() + " " + mac.getEvSahibiSkor() +
+                " - " + mac.getMisafirSkor() + " " + misafir.getAd());
+        System.out.println("--------");
+    }
+}
+
+public void puanTablosunuGoster() {
+    System.out.println("PUAN TABLOSU");
+    System.out.println("------------");
+
+    for (Takim takim : takimlar) {
+        System.out.println(takim.getAd() + " Puan: " + takim.getPuan());
+    }
+}
+
+public static void main(String[] args) {
+    // Takımları oluşturalım
+    Takim takim1 = new Takim("Takım 1");
+    Takim takim2 = new Takim("Takım 2");
+    Takim takim3 = new Takim("Takım 3");
+    Takim takim4 = new Takim("Takım 4");
+
+    // Fikstür oluşturucuyu başlat
+    List<Takim> takimlar = new ArrayList<>();
+    takimlar.add(takim1);
+    takimlar.add(takim2);
+    takimlar.add(takim3);
+    takimlar.add(takim4);
+
+    FiksturOlusturucu fiksturOlusturucu = new FiksturOlusturucu(takimlar);
+    fiksturOlusturucu.fiksturOlustur();
+
+    // Maçları oynat ve sonuçları kaydet
+    fiksturOlusturucu.macOynat(2, 1, 0);
+    fiksturOlusturucu.macOynat(0, 0, 1);
+    fiksturOlusturucu.macOynat(3, 2, 2);
+
+    // Fikstürü ve puan tablosunu göster
+    fiksturOlusturucu.fiksturuGoster();
+    System.out.println();
+    fiksturOlusturucu.puanTablosunuGoster();
+}

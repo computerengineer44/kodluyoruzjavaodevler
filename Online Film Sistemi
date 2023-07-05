@@ -1,0 +1,94 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Film {
+    private String title;
+    private String genre;
+    
+    public Film(String title, String genre) {
+        this.title = title;
+        this.genre = genre;
+    }
+    
+    public String getTitle() {
+        return title;
+    }
+    
+    public String getGenre() {
+        return genre;
+    }
+}
+
+class FilmPlatformu {
+    private List<Film> films;
+    
+    public FilmPlatformu() {
+        films = new ArrayList<>();
+    }
+    
+    public void filmEkle(String title, String genre) {
+        Film film = new Film(title, genre);
+        films.add(film);
+        System.out.println("Film eklendi: " + film.getTitle() + " (" + film.getGenre() + ")");
+    }
+    
+    public void filmAra(String keyword) {
+        List<Film> matchingFilms = new ArrayList<>();
+        
+        for (Film film : films) {
+            if (film.getTitle().toLowerCase().contains(keyword.toLowerCase())) {
+                matchingFilms.add(film);
+            }
+        }
+        
+        if (matchingFilms.isEmpty()) {
+            System.out.println("Eşleşen film bulunamadı.");
+        } else {
+            System.out.println("Eşleşen filmler:");
+            for (Film film : matchingFilms) {
+                System.out.println("- " + film.getTitle() + " (" + film.getGenre() + ")");
+            }
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        FilmPlatformu filmPlatformu = new FilmPlatformu();
+        
+        while (true) {
+            System.out.println("1. Film Ekle");
+            System.out.println("2. Film Ara");
+            System.out.println("3. Çıkış");
+            System.out.print("Seçiminizi yapın (1-3): ");
+            int choice = scanner.nextInt();
+            
+            switch (choice) {
+                case 1:
+                    scanner.nextLine();
+                    System.out.print("Film Adı: ");
+                    String filmAdi = scanner.nextLine();
+                    System.out.print("Film Türü: ");
+                    String filmTur = scanner.nextLine();
+                    filmPlatformu.filmEkle(filmAdi, filmTur);
+                    break;
+                case 2:
+                    scanner.nextLine();
+                    System.out.print("Aranacak Kelime: ");
+                    String arananKelime = scanner.nextLine();
+                    filmPlatformu.filmAra(arananKelime);
+                    break;
+                case 3:
+                    System.out.println("Çıkış yapılıyor...");
+                    return;
+                default:
+                    System.out.println("Geçersiz bir seçim yaptınız. Lütfen tekrar deneyin.");
+                    break;
+            }
+            
+            System.out.println();
+        }
+    }
+}

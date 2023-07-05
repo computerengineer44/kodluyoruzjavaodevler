@@ -1,0 +1,28 @@
+public class AsalSayilar {
+    public static void main(String[] args) {
+        int start = 1;
+        int end = 100;
+
+        System.out.println("1 ile 100 arasindaki asal sayilar:");
+
+        for (int i = start; i <= end; i++) {
+            if (isAsal(i)) {
+                System.out.print(i + " ");
+            }
+        }
+    }
+
+    public static boolean isAsal(int number) {
+        if (number <= 1) {
+            return false;
+        }
+
+        for (int i = 2; i <= Math.sqrt(number); i++) {
+            if (number % i == 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}

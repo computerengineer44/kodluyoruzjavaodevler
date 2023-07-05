@@ -1,0 +1,31 @@
+import java.util.Scanner;
+
+public class ManavKasaProgrami {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Ürünlerin fiyatlarını belirleyen değişkenler
+        double elmaFiyati = 2.5;
+        double armutFiyati = 3.0;
+        double muzFiyati = 4.0;
+        
+        // Kullanıcıdan alınacak ürün miktarlarını tutan değişkenler
+        int elmaMiktari, armutMiktari, muzMiktari;
+        
+        System.out.print("Elma miktarını girin: ");
+        elmaMiktari = scanner.nextInt();
+        
+        System.out.print("Armut miktarını girin: ");
+        armutMiktari = scanner.nextInt();
+        
+        System.out.print("Muz miktarını girin: ");
+        muzMiktari = scanner.nextInt();
+        
+        // Toplam tutarı hesaplayan ve ekrana yazdıran kod bloğu
+        double toplamTutar = (elmaFiyati * elmaMiktari) + (armutFiyati * armutMiktari) + (muzFiyati * muzMiktari);
+        
+        System.out.println("Toplam tutar: " + toplamTutar + " TL");
+        
+        scanner.close();
+    }
+}

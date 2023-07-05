@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+public class CinZodyagiHesaplamaProgrami {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Doğum yılınızı girin: ");
+        int dogumYili = scanner.nextInt();
+        
+        String[] cinZodyagi = {"Maymun", "Horoz", "Köpek", "Domuz", "Fare", "Öküz", "Kaplan", "Tavşan", "Ejderha", "Yılan", "At", "Koyun"};
+        int baslangicYili = 1900; // Çin Zodyağı döngüsünün başladığı yıl
+        
+        int indeks = (dogumYili - baslangicYili) % 12;
+        
+        if (indeks < 0) {
+            indeks += 12;
+        }
+        
+        String zodyakBurcu = cinZodyagi[indeks];
+        
+        System.out.println("Çin Zodyağı Burcunuz: " + zodyakBurcu);
+        
+        scanner.close();
+    }
+}

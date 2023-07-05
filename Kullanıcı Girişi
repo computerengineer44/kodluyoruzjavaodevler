@@ -1,0 +1,34 @@
+import java.util.Scanner;
+
+public class PasswordReset {
+    public static void main(String[] args) {
+        String correctPassword = "correct123"; // Doğru şifre burada tanımlanır
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Şifrenizi giriniz: ");
+        String enteredPassword = scanner.nextLine();
+        
+        if (!enteredPassword.equals(correctPassword)) {
+            System.out.print("Şifreniz yanlış. Şifrenizi sıfırlamak ister misiniz? (E/H): ");
+            String resetOption = scanner.nextLine();
+            
+            if (resetOption.equalsIgnoreCase("E")) {
+                System.out.print("Yeni şifrenizi giriniz: ");
+                String newPassword = scanner.nextLine();
+                
+                if (!newPassword.equals(enteredPassword) && !newPassword.equals(correctPassword)) {
+                    System.out.println("Şifre oluşturuldu.");
+                } else {
+                    System.out.println("Şifre oluşturulamadı, lütfen başka şifre giriniz.");
+                }
+            } else {
+                System.out.println("Şifre sıfırlama işlemi iptal edildi.");
+            }
+        } else {
+            System.out.println("Şifre doğru. Giriş başarılı.");
+        }
+        
+        scanner.close();
+    }
+}

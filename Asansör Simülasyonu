@@ -1,0 +1,121 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+enum Direction {
+    UP,
+    DOWN
+}
+
+class Passenger {
+    private int currentFloor;
+    private int destinationFloor;
+    
+    public Passenger(int currentFloor, int destinationFloor) {
+        this.currentFloor = currentFloor;
+        this.destinationFloor = destinationFloor;
+    }
+    
+    public int getCurrentFloor() {
+        return currentFloor;
+    }
+    
+    public int getDestinationFloor() {
+        return destinationFloor;
+    }
+}
+
+class Elevator {
+    private int currentFloor;
+    private Direction direction;
+    private List<Passenger> passengers;
+    
+    public Elevator() {
+        currentFloor = 1;
+        direction = Direction.UP;
+        passengers = new ArrayList<>();
+    }
+    
+    public void move() {
+        if (direction == Direction.UP) {
+            currentFloor++;
+        } else {
+            currentFloor--;
+        }
+    }
+    
+    public void addPassenger(Passenger passenger) {
+        passengers.add(passenger);
+        System.out.println("Yolcu eklendi: Kat " + passenger.getCurrentFloor() + " -> Kat " + passenger.getDestinationFloor());
+    }
+    
+    public void removePassengers() {
+        List<Passenger> completedPassengers = new ArrayList<>();
+        
+        for (Passenger passenger : passengers) {
+            if (passenger.getDestinationFloor() == currentFloor) {
+                completedPassengers.add(passenger);
+            }
+        }
+        
+        for (Passenger passenger : completedPassengers) {
+            passengers.remove(passenger);
+            System.out.println("Yolcu indi: Kat " + passenger.getDestinationFloor());
+        }
+    }
+    
+    public void printStatus() {
+        System.out.println("Asansör Durumu: Kat " + currentFloor + ", Yön: " + direction);
+        
+        if (!passengers.isEmpty()) {
+            System.out.println("Yolcular:");
+            for (Passenger passenger : passengers) {
+                System.out.println("- Kat " + passenger.getCurrentFloor() + " -> Kat " + passenger.getDestinationFloor());
+            }
+        } else {
+            System.out.println("Yolcu yok.");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Elevator elevator = new Elevator();
+        
+        while (true) {
+            System.out.println("1. Asansöre Yolcu Ekle");
+            System.out.println("2. Asansörü Hareket Ettir");
+            System.out.println("3. Asansör Durumunu Göster");
+            System.out.println("4. Çıkış");
+            System.out.print("Seçiminizi yapın (1-4): ");
+            int choice = scanner.nextInt();
+            
+            switch (choice) {
+                case 1:
+                    System.out.print("Geçerli Kat: ");
+                    int currentFloor = scanner.nextInt();
+                    System.out.print("Hedef Kat: ");
+                    int destinationFloor = scanner.nextInt();
+                    Passenger passenger = new Passenger(currentFloor, destinationFloor);
+                    elevator.addPassenger(passenger);
+                    break;
+                case 2:
+                    elevator.move();
+                    elevator.removePassengers();
+                    break;
+                case 3:
+                    elevator.printStatus();
+                    break;
+                case 4:
+                    System.out.println("Çıkış yapılıyor...");
+                    return;
+                default:
+                    System.out.println("Geçersiz bir seçim yaptınız. Lütfen tekrar deneyin.");
+                    break;
+            }
+            
+            System.out.println();
+        }
+    }
+}

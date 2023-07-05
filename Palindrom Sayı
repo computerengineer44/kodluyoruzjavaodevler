@@ -1,0 +1,22 @@
+public class PalindromeExample {
+    public static boolean isPalindrome(int number) {
+        int originalNumber = number;
+        int reversedNumber = 0;
+
+        while (number != 0) {
+            int remainder = number % 10;
+            reversedNumber = reversedNumber * 10 + remainder;
+            number /= 10;
+        }
+
+        return originalNumber == reversedNumber;
+    }
+
+    public static void main(String[] args) {
+        int num1 = 12321;
+        int num2 = 45678;
+
+        System.out.println(num1 + " palindromik mi? " + isPalindrome(num1));
+        System.out.println(num2 + " palindromik mi? " + isPalindrome(num2));
+    }
+}

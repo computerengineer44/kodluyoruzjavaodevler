@@ -1,0 +1,46 @@
+public class Liste<T> {
+    private Object[] array;
+    private int size;
+    private static final int DEFAULT_CAPACITY = 10;
+
+    public Liste() {
+        array = new Object[DEFAULT_CAPACITY];
+        size = 0;
+    }
+
+    public void ekle(T element) {
+        if (size == array.length)
+            genislet();
+
+        array[size++] = element;
+    }
+
+    public T getir(int index) {
+        if (index < 0 || index >= size)
+            throw new IndexOutOfBoundsException("Geçersiz indeks!");
+
+        return (T) array[index];
+    }
+
+    public void sil(int index) {
+        if (index < 0 || index >= size)
+            throw new IndexOutOfBoundsException("Geçersiz indeks!");
+
+        for (int i = index; i < size - 1; i++)
+            array[i] = array[i + 1];
+
+        array[size - 1] = null;
+        size--;
+    }
+
+    public int boyut() {
+        return size;
+    }
+
+    private void genislet() {
+        int newCapacity = array.length * 2;
+        Object[] newArray = new Object[newCapacity];
+        System.arraycopy(array, 0, newArray, 0, size);
+        array = newArray;
+    }
+}

@@ -1,0 +1,50 @@
+import java.util.Scanner;
+
+public class MatrisTranspozu {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Matrisin satır sayısını giriniz: ");
+        int satirSayisi = scanner.nextInt();
+
+        System.out.print("Matrisin sütun sayısını giriniz: ");
+        int sutunSayisi = scanner.nextInt();
+
+        int[][] matris = new int[satirSayisi][sutunSayisi];
+
+        System.out.println("Matrisin elemanlarını giriniz:");
+        for (int i = 0; i < satirSayisi; i++) {
+            for (int j = 0; j < sutunSayisi; j++) {
+                System.out.print("Eleman (" + (i + 1) + ", " + (j + 1) + "): ");
+                matris[i][j] = scanner.nextInt();
+            }
+        }
+
+        int[][] transpoz = transpozBul(matris);
+
+        System.out.println("Matrisin transpozu:");
+        for (int i = 0; i < sutunSayisi; i++) {
+            for (int j = 0; j < satirSayisi; j++) {
+                System.out.print(transpoz[j][i] + " ");
+            }
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+
+    public static int[][] transpozBul(int[][] matris) {
+        int satirSayisi = matris.length;
+        int sutunSayisi = matris[0].length;
+
+        int[][] transpoz = new int[sutunSayisi][satirSayisi];
+
+        for (int i = 0; i < sutunSayisi; i++) {
+            for (int j = 0; j < satirSayisi; j++) {
+                transpoz[i][j] = matris[j][i];
+            }
+        }
+
+        return transpoz;
+    }
+}

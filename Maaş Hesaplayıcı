@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+public class MaasHesaplayici {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Çalışma saatlerini giriniz: ");
+        int calismaSaatleri = scanner.nextInt();
+
+        System.out.print("Saatlik ücreti giriniz: ");
+        double saatlikUcret = scanner.nextDouble();
+
+        double maas = maasHesapla(calismaSaatleri, saatlikUcret);
+        System.out.println("Maaş: " + maas);
+
+        scanner.close();
+    }
+
+    public static double maasHesapla(int calismaSaatleri, double saatlikUcret) {
+        if (calismaSaatleri <= 0 || saatlikUcret <= 0) {
+            System.out.println("Hatalı giriş yaptınız.");
+            return 0;
+        }
+
+        double maas = calismaSaatleri * saatlikUcret;
+        return maas;
+    }
+}

@@ -1,0 +1,140 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Student {
+    private String name;
+    private int id;
+    
+    public Student(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public int getId() {
+        return id;
+    }
+}
+
+class Course {
+    private String name;
+    private int courseId;
+    
+    public Course(String name, int courseId) {
+        this.name = name;
+        this.courseId = courseId;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public int getCourseId() {
+        return courseId;
+    }
+}
+
+class University {
+    private List<Student> students;
+    private List<Course> courses;
+    
+    public University() {
+        students = new ArrayList<>();
+        courses = new ArrayList<>();
+    }
+    
+    public void addStudent(String name, int id) {
+        Student student = new Student(name, id);
+        students.add(student);
+        System.out.println("Öğrenci eklendi: " + student.getName() + " (ID: " + student.getId() + ")");
+    }
+    
+    public void addCourse(String name, int courseId) {
+        Course course = new Course(name, courseId);
+        courses.add(course);
+        System.out.println("Ders eklendi: " + course.getName() + " (ID: " + course.getCourseId() + ")");
+    }
+    
+    public void enrollStudentInCourse(int studentId, int courseId) {
+        Student student = findStudentById(studentId);
+        Course course = findCourseById(courseId);
+        
+        if (student != null && course != null) {
+            System.out.println("Öğrenci " + student.getName() + " ders " + course.getName() + "'e kaydedildi.");
+        } else {
+            System.out.println("Öğrenci veya ders bulunamadı.");
+        }
+    }
+    
+    private Student findStudentById(int id) {
+        for (Student student : students) {
+            if (student.getId() == id) {
+                return student;
+            }
+        }
+        return null;
+    }
+    
+    private Course findCourseById(int courseId) {
+        for (Course course : courses) {
+            if (course.getCourseId() == courseId) {
+                return course;
+            }
+        }
+        return null;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        University university = new University();
+        
+        while (true) {
+            System.out.println("1. Öğrenci Ekle");
+            System.out.println("2. Ders Ekle");
+            System.out.println("3. Öğrenciyi Ders Kaydına Al");
+            System.out.println("4. Çıkış");
+            System.out.print("Seçiminizi yapın (1-4): ");
+            int choice = scanner.nextInt();
+            
+            switch (choice) {
+                case 1:
+                    scanner.nextLine();
+                    System.out.print("Öğrenci Adı: ");
+                    String studentName = scanner.nextLine();
+                    System.out.print("Öğrenci ID'si: ");
+                    int studentId = scanner.nextInt();
+                    university.addStudent(studentName, studentId);
+                    break;
+                case 2:
+                    scanner.nextLine();
+                    System.out.print("Ders Adı: ");
+                    String courseName = scanner.nextLine();
+                    System.out.print("Ders ID'si: ");
+                    int courseId = scanner.nextInt();
+                    university.addCourse(courseName, courseId);
+                    break;
+                case 3:
+                    System.out.print("Öğrenci ID'si: ");
+                    int enrollStudentId = scanner.nextInt();
+                    System.out.print("Ders ID'si: ");
+                    int enrollCourseId = scanner.nextInt();
+                    university.enrollStudentInCourse(enrollStudentId, enrollCourseId);
+                    break;
+                case 4:
+                    System.out.println("Çıkış yapılıyor...");
+                    return;
+                default:
+                    System.out.println("Geçersiz bir seçim yaptınız. Lütfen tekrar deneyin.");
+                    break;
+            }
+            
+            System.out.println();
+        }
+    }
+}

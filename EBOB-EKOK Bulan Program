@@ -1,0 +1,34 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("İlk sayıyı girin: ");
+        int num1 = scanner.nextInt();
+        
+        System.out.print("İkinci sayıyı girin: ");
+        int num2 = scanner.nextInt();
+        
+        int ebob = findGCD(num1, num2);
+        int ekok = findLCM(num1, num2);
+        
+        System.out.println("Girilen sayıların EBOB'u: " + ebob);
+        System.out.println("Girilen sayıların EKOK'u: " + ekok);
+    }
+    
+    // İki sayının EBOB'unu hesaplayan fonksiyon
+    public static int findGCD(int a, int b) {
+        if (b == 0) {
+            return a;
+        } else {
+            return findGCD(b, a % b);
+        }
+    }
+    
+    // İki sayının EKOK'unu hesaplayan fonksiyon
+    public static int findLCM(int a, int b) {
+        int gcd = findGCD(a, b);
+        return (a * b) / gcd;
+    }
+}

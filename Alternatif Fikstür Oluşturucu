@@ -1,0 +1,34 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class FixtureGenerator {
+    public static void main(String[] args) {
+        List<String> teams = new ArrayList<>();
+        teams.add("Galatasaray");
+        teams.add("Bursaspor");
+        teams.add("Fenerbahçe");
+        teams.add("Beşiktaş");
+        teams.add("Başakşehir");
+        teams.add("Trabzonspor");
+
+        if (teams.size() % 2 != 0) {
+            teams.add("Bay");
+        }
+
+        int numberOfRounds = teams.size() - 1;
+        int matchesPerRound = teams.size() / 2;
+
+        for (int round = 1; round <= numberOfRounds; round++) {
+            System.out.println("Round " + round);
+
+            Collections.shuffle(teams); // Randomize the order of teams
+
+            for (int i = 0; i < matchesPerRound; i++) {
+                String homeTeam = teams.get(i);
+                String awayTeam = teams.get(teams.size() - 1 - i);
+                System.out.println(homeTeam + " vs " + awayTeam);
+            }
+        }
+    }
+}

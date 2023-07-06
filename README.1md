@@ -111,5 +111,38 @@ Hayvanat Bahçesi Sistemi
 
 
 
+Online Film Sistemi
+
+    +-------------------+
+    |      Uygulama     |
+    +-------------------+
+    | - filmler: List<Film> |
+    | - kullanıcılar: List<Kullanıcı> |
+    +-------------------+
+    | + getFilmler(): List<Film> |
+    | + addFilm(Film): void |
+    | + removeFilm(Film): void |
+    | + getKullanıcılar(): List<Kullanıcı> |
+    | + addKullanıcı(Kullanıcı): void |
+    | + removeKullanıcı(Kullanıcı): void |
+    +-------------------+
+
+            ^
+            |
+            |
+   +-------------------------------+
+   |                               |
++---------------------+      +--------------------+
+|         Film        |      |      Kullanıcı     |
++---------------------+      +--------------------+
+| - ad: String        |      | - ad: String      |
+| - fiyat: float      |      | - abone: boolean  |
++---------------------+      | - kredi: float    |
+| + getAd(): String   |      +--------------------+
+| + getFiyat(): float |      | + getAd(): String |
+| + setFiyat(float): void     | + isAbone(): boolean |
++---------------------------+ | + getKredi(): float |
+                               | + setKredi(float): void |
+                               +--------------------+
 
 

@@ -1,0 +1,368 @@
+import java.util.*;
+
+public class PatikaStore {
+    private static Map<Integer, String> brands = new TreeMap<>();
+    private static List<Product> products = new ArrayList<>();
+
+    public static void main(String[] args) {
+        initializeBrands();
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            showMenu();
+            System.out.print("Tercihiniz: ");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    handleNotebookOperations(scanner);
+                    break;
+                case 2:
+                    handleCellPhoneOperations(scanner);
+                    break;
+                case 3:
+                    listBrands();
+                    break;
+                case 0:
+                    System.out.println("Çıkış yapılıyor...");
+                    break;
+                default:
+                    System.out.println("Geçersiz tercih! Tekrar deneyin.");
+                    break;
+            }
+        } while (choice != 0);
+    }
+
+    private static void showMenu() {
+        System.out.println("\nPatikaStore Ürün Yönetim Paneli!");
+        System.out.println("1 - Notebook İşlemleri");
+        System.out.println("2 - Cep Telefonu İşlemleri");
+        System.out.println("3 - Marka Listele");
+        System.out.println("0 - Çıkış Yap");
+    }
+
+    private static void initializeBrands() {
+        brands.put(1, "Samsung");
+        brands.put(2, "Lenovo");
+        brands.put(3, "Apple");
+        brands.put(4, "Huawei");
+        brands.put(5, "Casper");
+        brands.put(6, "Asus");
+        brands.put(7, "HP");
+        brands.put(8, "Xiaomi");
+        brands.put(9, "Monster");
+    }
+
+    private static void handleNotebookOperations(Scanner scanner) {
+        int choice;
+        do {
+            showNotebookMenu();
+            System.out.print("Tercihiniz: ");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    listProducts(ProductType.NOTEBOOK);
+                    break;
+                case 2:
+                    addProduct(scanner, ProductType.NOTEBOOK);
+                    break;
+                case 3:
+                    deleteProduct(scanner, ProductType.NOTEBOOK);
+                    break;
+                case 4:
+                    filterProductsByBrand(scanner, ProductType.NOTEBOOK);
+                    break;
+                case 0:
+                    System.out.println("Notebook işlemlerinden çıkılıyor...");
+                    break;
+                default:
+                    System.out.println("Geçersiz tercih! Tekrar deneyin.");
+                    break;
+            }
+        } while (choice != 0);
+    }
+
+    private static void handleCellPhoneOperations(Scanner scanner) {
+        int choice;
+        do {
+            showCellPhoneMenu();
+            System.out.print("Tercihiniz: ");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    listProducts(ProductType.CELL_PHONE);
+                    break;
+                case 2:
+                    addProduct(scanner, ProductType.CELL_PHONE);
+                    break;
+                case 3:
+                    deleteProduct(scanner, ProductType.CELL_PHONE);
+                    break;
+                case 4:
+                    filterProductsByBrand(scanner, ProductType.CELL_PHONE);
+                    break;
+                case 0:
+                    System.out.println("Cep telefonu işlemlerinden çıkılıyor...");
+                    break;
+                default:
+                    System.out.println("Geçersiz tercih! Tekrar deneyin.");
+                    break;
+            }
+        } while (choice != 0);
+    }
+
+    private static void showNotebookMenu() {
+        System.out.println("\nNotebook İşlemleri");
+        System.out.println("1 - Ürünleri Listele");
+        System.out.println("2 - Ürün Ekle");
+        System.out.println("3 - Ürün Sil");
+        System.out.println("4 - Markaya Göre Filtrele");
+        System.out.println("0 - Geri Dön");
+    }
+
+    private static void showCellPhoneMenu() {
+        System.out.println("\nCep Telefonu İşlemleri");
+        System.out.println("1 - Ürünleri Listele");
+        System.out.println("2 - Ürün Ekle");
+        System.out.println("3 - Ürün Sil");
+        System.out.println("4 - Markaya Göre Filtrele");
+        System.out.println("0 - Geri Dön");
+    }
+
+    private static void listBrands() {
+        System.out.println("Markalarımız");
+System.out.println("--------------");
+for (String brand : brands.values()) {
+System.out.println("- " + brand);
+}
+}
+
+private static void listProducts(ProductType productType) {
+    List<Product> filteredProducts = new ArrayList<>();
+    for (Product product : products) {
+        if (product.getProductType() == productType) {
+            filteredProducts.add(product);
+        }
+    }
+    String title = productType == ProductType.NOTEBOOK ? "Notebook" : "Cep Telefonu";
+    System.out.println("\n" + title + " Listesi");
+    System.out.println("----------------------------------------------------------------------------------------------------");
+    System.out.format("| %-2s | %-28s | %-9s | %-8s | %-10s | %-8s | %-10s |\n",
+            "ID", "Ürün Adı", "Fiyat", "Marka", "Depolama", "Ekran", "RAM");
+    System.out.println("----------------------------------------------------------------------------------------------------");
+    for (Product product : filteredProducts) {
+        System.out.format("| %-2d | %-28s | %-9.2f TL | %-8s | %-10s | %-8s | %-10d |\n",
+                product.getId(), product.getName(), product.getPrice(), product.getBrand(),
+                product.getStorage(), product.getScreenSize(), product.getRam());
+    }
+    System.out.println("----------------------------------------------------------------------------------------------------");
+}
+
+private static void addProduct(Scanner scanner, ProductType productType) {
+    System.out.print("\nÜrün Adı: ");
+    String name = scanner.next();
+    System.out.print("Birim Fiyatı: ");
+    double price = scanner.nextDouble();
+    System.out.print("İndirim Oranı: ");
+    double discountRate = scanner.nextDouble();
+    System.out.print("Stok Miktarı: ");
+    int stockQuantity = scanner.nextInt();
+    System.out.print("Marka ID'si: ");
+    int brandId = scanner.nextInt();
+
+    String brand = brands.get(brandId);
+
+    if (productType == ProductType.NOTEBOOK) {
+        System.out.print("RAM: ");
+        int ram = scanner.nextInt();
+        System.out.print("Depolama: ");
+        int storage = scanner.nextInt();
+        System.out.print("Ekran Boyutu: ");
+        double screenSize = scanner.nextDouble();
+        products.add(new Notebook(name, price, discountRate, stockQuantity, brand, ram, storage, screenSize));
+        System.out.println("Notebook başarıyla eklendi.");
+    } else if (productType == ProductType.CELL_PHONE) {
+        System.out.print("Telefonun Hafıza Bilgisi: ");
+        String memory = scanner.next();
+        System.out.print("Ekran Boyutu: ");
+        double screenSize = scanner.nextDouble();
+        System.out.print("Pil Gücü: ");
+        double batteryPower = scanner.nextDouble();
+        System.out.print("RAM: ");
+        int ram = scanner.nextInt();
+        System.out.print("Renk: ");
+        String color = scanner.next();
+        products.add(new CellPhone(name, price, discountRate, stockQuantity, brand, memory, screenSize,
+                batteryPower, ram, color));
+        System.out.println("Cep telefonu başarıyla eklendi.");
+    }
+}
+
+private static void deleteProduct(Scanner scanner, ProductType productType) {
+    System.out.print("\nSilmek istediğiniz ürünün ID'sini girin: ");
+    int productId = scanner.nextInt();
+    boolean isDeleted = false;
+    Iterator<Product> iterator = products.iterator();
+    while (iterator.hasNext()) {
+        Product product = iterator.next();
+        if (product.getId() == productId && product.getProductType() == productType) {
+            iterator.remove();
+            isDeleted = true;
+        }
+    }
+    if (isDeleted) {
+        System.out.println("Ürün başarıyla silindi.");
+    } else {
+        System.out.println("ID'ye ve ürün grubuna uygun ürün bulunamadı.");
+    }
+}
+
+private static void filterProductsByBrand(Scanner scanner, ProductType productType) {
+    System.out.print("\nListelemek istediğiniz markanın ID'sini girin: ");
+    int brandId = scanner.nextInt();
+    String brand = brands.get(brandId);
+    List<Product> filteredProducts = new ArrayList<>();
+    for (Product product : products) {
+        if (product.getProductType() == productType && product.getBrand().equals(brand)) {
+            filteredProducts.add(product);
+        }
+    }
+    String title = productType == ProductType.NOTEBOOK ? "Notebook" : "Cep Telefonu";
+    System.out.println("\n" + title + " Listesi (" + brand + ")");
+    System.out.println("----------------------------------------------------------------------------------------------------");
+    System.out.format("| %-2s | %-28s | %-9s | %-8s | %-10s | %-8s | %-10s |\n",
+            "ID", "Ürün Adı", "Fiyat", "Marka", "Depolama", "Ekran", "RAM");
+    System.out.println("----------------------------------------------------------------------------------------------------");
+    for (Product product : filteredProducts) {
+        System.out.format("| %-2d | %-28s | %-9.2f TL | %-8s | %-10s | %-8s | %-10d |\n",
+                product.getId(), product.getName(), product.getPrice(), product.getBrand(),
+                product.getStorage(), product.getScreenSize(), product.getRam());
+    }
+    System.out.println("----------------------------------------------------------------------------------------------------");
+}
+}
+
+class Product {
+private static int idCounter = 1;
+private int id;
+private String name;
+private double price;
+private double discountRate;
+private int stockQuantity;
+private String brand;
+
+public Product(String name, double price, double discountRate, int stockQuantity, String brand) {
+    this.id = idCounter++;
+    this.name = name;
+    this.price = price;
+    this.discountRate = discountRate;
+    this.stockQuantity = stockQuantity;
+    this.brand = brand;
+}
+
+public int getId() {
+    return id;
+}
+
+public String getName() {
+    return name;
+}
+
+public double getPrice() {
+    return price;
+}
+
+public double getDiscountRate() {
+    return discountRate;
+}
+
+public int getStockQuantity() {
+    return stockQuantity;
+}
+
+public String getBrand() {
+    return brand;
+}
+
+public ProductType getProductType() {
+    return null;
+}
+}
+
+class Notebook extends Product {
+private int ram;
+private int storage;
+private double screenSize;
+
+public Notebook(String name, double price, double discountRate, int stockQuantity,
+                String brand, int ram, int storage, double screenSize) {
+    super(name, price, discountRate, stockQuantity, brand);
+    this.ram = ram;
+    this.storage = storage;
+    this.screenSize = screenSize;
+}
+
+public int getRam() {
+    return ram;
+}
+
+public int getStorage() {
+    return storage;
+}
+
+public double getScreenSize() {
+    return screenSize;
+}
+
+@Override
+public ProductType getProductType() {
+    return ProductType.NOTEBOOK;
+}
+}
+
+class CellPhone extends Product {
+private String memory;
+private double screenSize;
+private double batteryPower;
+private int ram;
+private String color;
+
+public CellPhone(String name, double price, double discountRate, int stockQuantity,
+                 String brand, String memory, double screenSize, double batteryPower, int ram, String color) {
+    super(name, price, discountRate, stockQuantity, brand);
+    this.memory = memory;
+    this.screenSize = screenSize;
+    this.batteryPower = batteryPower;
+    this.ram = ram;
+    this.color = color;
+}
+
+public String getMemory() {
+    return memory;
+}
+
+public double getScreenSize() {
+    return screenSize;
+}
+
+public double getBatteryPower() {
+    return batteryPower;
+}
+
+public int getRam() {
+    return ram;
+}
+
+public String getColor() {
+    return color;
+}
+
+@Override
+public ProductType getProductType() {
+    return ProductType.CELL_PHONE;
+}
+}
+
+enum ProductType {
+NOTEBOOK,
+CELL_PHONE
+}

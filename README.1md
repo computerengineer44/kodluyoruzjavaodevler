@@ -146,3 +146,49 @@ Online Film Sistemi
                                +--------------------+
 
 
+
+Asansör Simülasyonu
+
+                  +------------------+
+                  |      Asansör     |
+                  +------------------+
+                  | - kapasite: int  |
+                  | - katGosterge: int|
+                  | - acikMi: boolean|
+                  +------------------+
+                  | + asansoreBin(): void |
+                  | + hedefKatBelirle(int): void |
+                  | + acilDurumSinyal(): void |
+                  +-------------------+
+                        ^
+                        |
+                        |
+              +-----------------------+
+              |                       |
+          +------+               +-------------+
+          | Kat  |               | AsansorKapisı |
+          +------+               +-------------+
+          | - katNo: int         | - isikDurumu: boolean |
+          | - varisZili: boolean | + ziliCal(): void |
+          +------+               +-------------+
+          | + katCagrısıYap(KatCagrisi): void |
+          | + asansorKapiCagrisiYap(AsansorKapiCagrisi): void |
+          +---------------------------------------------+
+                                        ^
+                                        |
+                                        |
+       +-----------------------------------------------------------------------------------------+
+       |                                                                                         |
+  +----+----------+                   +-----------+            +-------------+         +--------------+
+  |   CagriDugmesi|                   | Yolcu     |            | RastgeleSayi|         |   Simülatör  |
+  +---------------+                   +-----------+            +-------------+         +--------------+
+  | - yon: Yon    |                   | - kalkisKat: int         |               |         |              |
+  +---------------+                   | - varisKat: int         |               |         |              |
+  | + bas()       |                   +-----------------+        | + uret():int  |         |              |
+  | + dur()       |                                      |                         |         |              |
+  +-----------------------------------------------------+                         +---------+--------------+
+
+
+
+
+

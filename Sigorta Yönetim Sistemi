@@ -1,0 +1,232 @@
+import java.util.ArrayList;
+import java.util.Date;
+
+interface Address {
+    // Adresle ilgili ortak fonksiyonlar burada tanımlanabilir
+}
+
+class HomeAddress implements Address {
+    // Ev adresi ile ilgili özellikler ve davranışlar burada tanımlanabilir
+}
+
+class BusinessAddress implements Address {
+    // İş adresi ile ilgili özellikler ve davranışlar burada tanımlanabilir
+}
+
+class User {
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private String occupation;
+    private int age;
+    private ArrayList<Address> addresses;
+    private Date lastLoginDate;
+
+    public User(String firstName, String lastName, String email, String password, String occupation,
+                int age, ArrayList<Address> addresses) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.occupation = occupation;
+        this.age = age;
+        this.addresses = addresses;
+    }
+
+    // Getter ve setter metodları buraya yazılabilir
+
+    public void addAddress(Address address) {
+        addresses.add(address);
+    }
+
+    public void removeAddress(Address address) {
+        addresses.remove(address);
+    }
+}
+
+abstract class Account {
+    private AuthenticationStatus authenticationStatus;
+    private User user;
+    private ArrayList<Insurance> insurances;
+
+    public Account(User user) {
+        this.authenticationStatus = AuthenticationStatus.FAIL;
+        this.user = user;
+        this.insurances = new ArrayList<>();
+    }
+
+    public void login(String email, String password) throws InvalidAuthenticationException {
+        if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+            authenticationStatus = AuthenticationStatus.SUCCESS;
+            user.setLastLoginDate(new Date());
+        } else {
+            throw new InvalidAuthenticationException("Invalid email or password");
+        }
+    }
+
+    public void addInsurance(Insurance insurance) {
+        insurances.add(insurance);
+    }
+
+    public abstract void showUserInfo();
+
+    public abstract void calculateInsurancePrice();
+
+    // Getter ve setter metodları buraya yazılabilir
+}
+
+class Individual extends Account {
+    public Individual(User user) {
+        super(user);
+    }
+
+    @Override
+    public void showUserInfo() {
+        System.out.println("Individual Account Information:");
+        System.out.println("Name: " + getUser().getFirstName() + " " + getUser().getLastName());
+        System.out.println("Email: " + getUser().getEmail());
+        System.out.println("Occupation: " + getUser().getOccupation());
+        // Diğer bilgileri yazdırma
+    }
+
+    @Override
+    public void calculateInsurancePrice() {
+        // Bireysel müşterilere özgü sigorta fiyatı hesaplama işlemleri
+    }
+}
+
+class Enterprise extends Account {
+    public Enterprise(User user) {
+        super(user);
+    }
+
+    @Override
+    public void showUserInfo() {
+        System.out.println("Enterprise Account Information:");
+        System.out.println("Name: " + getUser().getFirstName() + " " + getUser().getLastName());
+        System.out.println("Email: " + getUser().getEmail());
+        System.out.println("Occupation: " + getUser().getOccupation());
+        // Diğer bilgileri yazdırma
+    }
+
+    @Override
+    public void calculateInsurancePrice() {
+        // Kurumsal müşterilere özgü sigorta fiyatı hesaplama işlemleri
+    }
+}
+
+class AddressManager {
+    public static void addAddress(User user, Address address) {
+        user.addAddress(address);
+    }
+
+    public static void removeAddress(User user, Address address) {
+        user.removeAddress(address);
+    }
+}
+
+abstract class Insurance {
+    private String name;
+    private double price;
+    private Date startDate;
+    private Date endDate;
+
+    public Insurance(String name, double price, Date startDate, Date endDate) {
+        this.name = name;
+        this.price = price;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public abstract void calculate();
+}
+
+class HealthInsurance extends Insurance {
+    public HealthInsurance(String name, double price, Date startDate, Date endDate) {
+        super(name, price, startDate, endDate);
+    }
+
+    @Override
+    public void calculate() {
+        // Sağlık sigortası fiyatı hesaplama işlemleri
+    }
+}
+
+class ResidenceInsurance extends Insurance {
+    public ResidenceInsurance(String name, double price, Date startDate, Date endDate) {
+        super(name, price, startDate, endDate);
+    }
+  @Override
+    public void calculate() {
+        // Konut sigortası fiyatı hesaplama işlemleri
+    }
+}
+
+class TravelInsurance extends Insurance {
+    public TravelInsurance(String name, double price, Date startDate, Date endDate) {
+        super(name, price, startDate, endDate);
+    }
+
+    @Override
+    public void calculate() {
+        // Seyahat sigortası fiyatı hesaplama işlemleri
+    }
+}
+
+class CarInsurance extends Insurance {
+    public CarInsurance(String name, double price, Date startDate, Date endDate) {
+        super(name, price, startDate, endDate);
+    }
+
+    @Override
+    public void calculate() {
+        // Oto sigortası fiyatı hesaplama işlemleri
+    }
+}
+
+enum AuthenticationStatus {
+    SUCCESS,
+    FAIL
+}
+
+class InvalidAuthenticationException extends Exception {
+    public InvalidAuthenticationException(String message) {
+        super(message);
+    }
+}
+
+class AccountManager {
+    private TreeSet<Account> accounts;
+
+    public AccountManager() {
+        this.accounts = new TreeSet<>();
+    }
+
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
+
+    public void removeAccount(Account account) {
+        accounts.remove(account);
+    }
+
+    public Account login(String email, String password) {
+        for (Account account : accounts) {
+            try {
+                account.login(email, password);
+                return account;
+            } catch (InvalidAuthenticationException e) {
+                // Geçersiz kimlik doğrulaması hatası
+            }
+        }
+        return null;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Örnek kullanım senaryoları burada gerçekleştirilebilir
+        // Örnek olarak hesap oluşturma, giriş yapma, sigorta ekleme gibi işlemler yapılabilir
+    }
+}

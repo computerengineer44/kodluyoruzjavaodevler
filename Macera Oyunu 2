@@ -1,0 +1,154 @@
+import java.util.Random;
+
+public class Oyun {
+    private static final int MIN_DAMAGE = 3;
+    private static final int MAX_DAMAGE = 6;
+    
+    private static final double WEAPON_WIN_CHANCE = 0.15;
+    private static final double RIFLE_WIN_CHANCE = 0.20;
+    private static final double SWORD_WIN_CHANCE = 0.30;
+    private static final double PISTOL_WIN_CHANCE = 0.50;
+    private static final double ARMOR_WIN_CHANCE = 0.15;
+    private static final double HEAVY_ARMOR_WIN_CHANCE = 0.20;
+    private static final double MEDIUM_ARMOR_WIN_CHANCE = 0.30;
+    private static final double LIGHT_ARMOR_WIN_CHANCE = 0.50;
+    private static final double MONEY_WIN_CHANCE = 0.25;
+    private static final double TEN_MONEY_WIN_CHANCE = 0.20;
+    private static final double FIVE_MONEY_WIN_CHANCE = 0.30;
+    private static final double ONE_MONEY_WIN_CHANCE = 0.50;
+    private static final double NOTHING_WIN_CHANCE = 0.45;
+
+    private static final int MIN_SNAKE_COUNT = 1;
+    private static final int MAX_SNAKE_COUNT = 5;
+    private static final int SNAKE_HEALTH = 12;
+    
+    private static final int REGION_COUNT = 4;
+    private static final int CAVE_INDEX = 0;
+    private static final int FOREST_INDEX = 1;
+    private static final int RIVER_INDEX = 2;
+    private static final int MINE_INDEX = 3;
+    
+    private boolean[] regionsCompleted;
+    private boolean mineEntered;
+    
+    public Oyun() {
+        regionsCompleted = new boolean[REGION_COUNT];
+        mineEntered = false;
+    }
+    
+    public void baslat() {
+        System.out.println("Oyuna hoş geldiniz!");
+        
+        while (true) {
+            int currentRegion = secimYap();
+            
+            if (currentRegion == -1) {
+                System.out.println("Oyunu kazandınız! Güvenli Eve döndünüz.");
+                break;
+            }
+            
+            savaş(currentRegion);
+            
+            if (mineEntered && regionsCompleted[MINE_INDEX]) {
+                System.out.println("Madene tekrar giriş yapılamaz.");
+                break;
+            }
+            
+            if (regionsCompleted[currentRegion]) {
+                System.out.println("Bu bölgeyi zaten tamamladınız.");
+                continue;
+            }
+            
+            ödülVer(currentRegion);
+            regionsCompleted[currentRegion] = true;
+        }
+        
+        System.out.println("Oyun bitti. İyi oyunlar!");
+    }
+    
+    private int secimYap() {
+        String[] bölgeler = {"Mağara", "Orman", "Nehir", "Maden"};
+        
+        System.out.println("\nBölge seçiniz:");
+        for (int i = 0; i < REGION_COUNT; i++) {
+            if (!regionsCompleted[i])
+                System.out.println((i + 1) + ". " + bölgeler[i]);
+        }
+        
+        System.out.print("Seçiminiz (Çıkış için 0): ");
+        int choice = getInput(0, REGION_COUNT);
+        
+        if (choice == 0)
+            return -1;
+        
+        return choice - 1;
+    }
+    
+    private void savaş(int regionIndex) {
+        Random random = new Random();
+        
+        int enemyCount = 0;
+        int damageToPlayer = 0;
+        
+        if (regionIndex == MINE_INDEX) {
+            enemyCount = random.nextInt(MAX_SNAKE_COUNT - MIN_SNAKE_COUNT + 1) + MIN_SNAKE_COUNT;
+            damageToPlayer = random.nextInt(MAX_DAMAGE - MIN_DAMAGE + 1) + MIN_DAMAGE;
+        } else {
+            if (random.nextDouble() < 0.5)
+                damageToPlayer = random.nextInt(MAX_DAMAGE - MIN_DAMAGE + 1) + MIN_DAMAGE;
+        }
+        
+        System.out.println("\nSavaş başlıyor!");
+        System.out.println("Düşman sayısı: " + enemyCount);
+        System.out.println("Oyuncuya verilen hasar: " + damageToPlayer);
+        
+        // Savaş mekanizması buraya yazılacak
+    }
+    
+    private void ödülVer(int regionIndex) {
+        String[] ödüller = {"Yemek", "Odun", "Su", "Para"}
+String regionName = "";
+        String[] rewards = {"Yemek", "Odun", "Su"};
+        
+        switch (regionIndex) {
+            case CAVE_INDEX:
+                regionName = "Mağara";
+                break;
+            case FOREST_INDEX:
+                regionName = "Orman";
+                break;
+            case RIVER_INDEX:
+                regionName = "Nehir";
+                break;
+            case MINE_INDEX:
+                regionName = "Maden";
+                rewards = new String[]{"Para", "Silah", "Zırh"};
+                break;
+        }
+        
+        System.out.println("\n" + regionName + " bölgesi tamamlandı!");
+        System.out.println("Ödül olarak " + rewards[regionIndex] + " envanterinize eklendi.");
+    }
+    
+    private int getInput(int min, int max) {
+        Scanner scanner = new Scanner(System.in);
+        
+        while (true) {
+            try {
+                int input = Integer.parseInt(scanner.nextLine());
+                
+                if (input >= min && input <= max)
+                    return input;
+                
+                System.out.print("Geçersiz giriş. Tekrar deneyin: ");
+            } catch (NumberFormatException e) {
+                System.out.print("Geçersiz giriş. Tekrar deneyin: ");
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+        Oyun oyun = new Oyun();
+        oyun.baslat();
+    }
+}

@@ -1,0 +1,65 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+class Book {
+    private String kitapIsmi;
+    private int sayfaSayisi;
+    private String yazarinIsmi;
+    private LocalDate yayinTarihi;
+
+    public Book(String kitapIsmi, int sayfaSayisi, String yazarinIsmi, LocalDate yayinTarihi) {
+        this.kitapIsmi = kitapIsmi;
+        this.sayfaSayisi = sayfaSayisi;
+        this.yazarinIsmi = yazarinIsmi;
+        this.yayinTarihi = yayinTarihi;
+    }
+
+    public String getKitapIsmi() {
+        return kitapIsmi;
+    }
+
+    public String getYazarinIsmi() {
+        return yazarinIsmi;
+    }
+
+    public int getSayfaSayisi() {
+        return sayfaSayisi;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Kitap listesi oluşturma
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(new Book("Kitap 1", 200, "Yazar 1", LocalDate.of(2020, 1, 1)));
+        bookList.add(new Book("Kitap 2", 150, "Yazar 2", LocalDate.of(2019, 2, 15)));
+        bookList.add(new Book("Kitap 3", 180, "Yazar 3", LocalDate.of(2021, 5, 10)));
+        bookList.add(new Book("Kitap 4", 120, "Yazar 2", LocalDate.of(2018, 12, 31)));
+        bookList.add(new Book("Kitap 5", 220, "Yazar 1", LocalDate.of(2022, 3, 20)));
+        bookList.add(new Book("Kitap 6", 90, "Yazar 3", LocalDate.of(2023, 7, 5)));
+        bookList.add(new Book("Kitap 7", 300, "Yazar 3", LocalDate.of(2017, 8, 2)));
+        bookList.add(new Book("Kitap 8", 150, "Yazar 2", LocalDate.of(2016, 6, 14)));
+        bookList.add(new Book("Kitap 9", 180, "Yazar 1", LocalDate.of(2015, 11, 30)));
+        bookList.add(new Book("Kitap 10", 250, "Yazar 2", LocalDate.of(2014, 9, 25)));
+
+        // Yeni Map oluşturma (kitap ismi -> yazar ismi)
+        Map<String, String> kitapYazarMap = bookList.stream()
+                .collect(Collectors.toMap(Book::getKitapIsmi, Book::getYazarinIsmi));
+
+        System.out.println("Kitap İsmi -> Yazar İsmi Map: " + kitapYazarMap);
+
+        // Sayfa sayısı 100'den fazla olan kitapları filtreleme
+        List<Book> sayfaFazlaKitaplar = bookList.stream()
+                .filter(book -> book.getSayfaSayisi() > 100)
+                .collect(Collectors.toList());
+
+        System.out.println("Sayfa Sayısı 100'den Fazla Olan Kitaplar: ");
+        for (Book book : sayfaFazlaKitaplar) {
+            System.out.println(book.getKitapIsmi());
+        }
+    }
+}

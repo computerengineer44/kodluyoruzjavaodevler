@@ -30,3 +30,86 @@
              |               |
              +---------------+
 
+
+
+Hayvanat Bahçesi Sistemi
+
+                 +-------------------+
+                 |     Hayvan        |
+                 +-------------------+
+                 | - türAdı: String  |
+                 | - ağırlık: float  |
+                 | - yaş: int        |
+                 +-------------------+
+                 | + getDosage(): float   |
+                 | + getFeedSchedule(): String |
+                 +-------------------+
+                          ^
+                          |
+                          |
+             +-------------------------------+
+             |                               |
+    +--------------------+          +---------------------+
+    |       Atlar        |          |     Kedigiller      |
+    +--------------------+          +---------------------+
+    |                    |          |                     |
+    +----------------- ----------------------+----------------------+
+    |                   |          |                      |
+    | + getDosage()     |          | + getDosage()        |
+    | + getFeedSchedule()|          | + getFeedSchedule()  |
+    +-------------------+          +----------------------+
+
+
+
+
+ Uçuş Yönetim Sistemi
+
+       +-------------------+
+       |   HavaYoluSirketi |
+       +-------------------+
+       | - kimlik: int     |
+       +-------------------+
+       | + getKimlik(): int|
+       +-------------------+
+       | + eklemekUcus(Ucus): void |
+       | + removeUcus(Ucus): void |
+       +-------------------+
+                 ^
+                 |
+    +-------------------------------+
+    |                               |
++---------------------+      +-----------------+
+|         Ucus        |      |       Pilot     |
++---------------------+      +-----------------+
+| - kimlik: int       |      | - kimlik: int   |
+| - kalkisHavaalani: String  |  | - deneyim: int |
+| - inisHavaalani: String    |  +-----------------+
+| - kalkisSaat: String       |  | + getKimlik(): int |
+| - inisSaat: String         |  | + getDeneyim(): int|
+| - pilot: Pilot             |  +-----------------+
++---------------------+      |
+| + getKimlik(): int  |      |
++---------------------+      |
+| + getPilot(): Pilot |      |
+| + setPilot(Pilot): void    |
++---------------------------+
+
+               ^
+               |
+    +-----------------------+
+    |                       |
++----------------------+  +----------------------+
+|        Ucak          |  |      Havaalani       |
++----------------------+  +----------------------+
+| - tip: String        |  | - kimlik: int        |
+| - isAvailable: bool  |  | - isim: String       |
++----------------------+  +----------------------+
+| + getTip(): String   |  | + getKimlik(): int   |
+| + isAvailable(): bool|  | + getIsim(): String  |
+| + setAvailability(bool): void   |
++----------------------+
+
+
+
+
+

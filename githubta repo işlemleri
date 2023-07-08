@@ -1,0 +1,19 @@
+GitHub'ta repo (repository) işlemleri yapmak için aşağıdaki adımları izleyebilirsiniz:
+
+GitHub hesabınızda oturum açın veya yeni bir GitHub hesabı oluşturun.
+
+Ana sayfada sağ üst köşede yer alan "+" simgesine tıklayarak yeni bir repo oluşturma ekranına gidin.
+
+Repo oluşturma ekranında, repo adını ve isteğe bağlı olarak açıklama alanını girin. Repo'nun gizli (private) veya herkese açık (public) olmasını seçebilirsiniz.
+
+Gerekirse repo ayarlarını yapılandırın. Bu ayarlar arasında ana branş belirleme, readme dosyası oluşturma, proje yönetimi gibi özellikler bulunabilir.
+
+Repo oluştur düğmesine tıklayarak yeni repo'yu oluşturun.
+
+Oluşturulan repo'nun sayfasına yönlendirileceksiniz. Bu sayfada projenizin dosyalarını yükleyebilir, dosya düzenlemeleri yapabilir, dal (branch) oluşturabilir, değişiklikleri takip edebilir ve diğer işlemleri gerçekleştirebilirsiniz.
+
+Git komutlarını kullanarak repo'yu yerel bilgisayarınıza klonlayabilir, değişiklikleri commit edebilir ve GitHub'a push edebilirsiniz.
+
+Projeye katkıda bulunmak isteyen diğer geliştiricilerle işbirliği yapmak için repo'yu paylaşabilir ve onlarla dal birleştirmeleri (merge) yapabilirsiniz.
+
+GitHub'ta repo işlemleri genellikle bu adımları izler. Repo'nun kullanıcıya, projeye ve gereksinimlere göre daha spesifik işlemler de yapılabilir.

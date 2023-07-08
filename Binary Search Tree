@@ -1,0 +1,36 @@
+Proje 3 - Binary Search Tree:
+
+Verilen dizi: [7, 5, 1, 8, 3, 6, 0, 9, 4, 2]
+
+Binary Search Tree'e bu diziyi eklerken aşağıdaki adımlar takip edilir:
+
+Adım 1: 7 (root)
+Adım 2: 7 (root)
+5
+Adım 3: 7 (root) /
+5 1
+Adım 4: 7 (root) /
+5 1
+8
+Adım 5: 7 (root) /
+5 1 \
+3 8
+Adım 6: 7 (root) /
+5 1 / \
+3 6 8
+Adım 7: 7 (root) /
+5 1 / \
+3 6 8 / 0
+Adım 8: 7 (root) /
+5 1 / \
+3 6 8 /
+0 9
+Adım 9: 7 (root) /
+5 1 / \
+3 6 8 /
+0 9 / 4
+Adım 10: 7 (root) /
+5 1 / \
+3 6 8 /
+0 9 / 4 / 2
+Binary Search Tree'e göre verilen dizinin aşamaları yukarıda belirtilmiştir. Her adımda, bir düğüm eklenerek BST yapısı oluşturulmuştur.

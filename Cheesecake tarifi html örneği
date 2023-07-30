@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cheesecake Tarifi</title>
+</head>
+<body>
+	<h1>Cheesecake Tarifi</h1>
+
+	<h2>Malzemeler:</h2>
+	<ul>
+		<li>200 gram krema peyniri</li>
+		<li>100 gram toz şeker</li>
+		<li>200 gram bisküvi</li>
+		<li>100 gram tereyağı</li>
+		<li>3 adet yumurta</li>
+		<li>1 çay kaşığı vanilya özütü</li>
+		<li>1 yemek kaşığı un</li>
+	</ul>
+
+	<h2>Yapılışı:</h2>
+	<ol>
+		<li>Bisküvileri mutfak robotunda ezerek toz haline getirin.</li>
+		<li>Tereyağını eritin ve bisküvi tozuna ekleyin. Karıştırın.</li>
+		<li>Karışımı cheesecake kalıbının tabanına yayarak düzleştirin ve buzdolabında 30 dakika bekletin.</li>
+		<li>Krema peynirini bir kapta çırparak pürüzsüz hale getirin.</li>
+		<li>Toz şekeri ekleyerek iyice karıştırın.</li>
+		<li>Yumurtaları tek tek ilave edin ve her birini karışıma iyice yedirin.</li>
+		<li>Vanilya özütü ve unu ekleyerek karıştırın.</li>
+		<li>Krema peynirli karışımı bisküvili tabanın üzerine dökün.</li>
+		<li>Önceden ısıtılmış 160 derece fırında yaklaşık 45-50 dakika pişirin.</li>
+		<li>Fırından çıkarıp oda sıcaklığında soğumaya bırakın.</li>
+		<li>Buzdolabında en az 4 saat dinlendirin.</li>
+		<li>Servis yapmadan önce dilimleyerek isteğe bağlı olarak üzerini meyve veya karamel sosuyla süsleyebilirsiniz.</li>
+	</ol>
+</body>
+</html>

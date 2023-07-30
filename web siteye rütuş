@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Sayfam</title>
+    <style>
+        /* Inline CSS */
+        h1 {
+            color: blue;
+            font-size: 24px;
+        }
+        
+        /* Internal CSS */
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        .menu {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        /* External CSS */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        ul {
+            list-style-position: inside;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="about.html">Hakkımızda</a>
+        <a href="contact.html">İletişim</a>
+    </div>
+
+    <div class="container">
+        <h1>Hoş Geldiniz!</h1>
+        <p>Merhaba arkadaşlar, kanalımıza hoş geldiniz.</p>
+        <p>Sitemiz birkaç sayfadan oluşuyor. Lütfen menüden diğer sayfalara geçiş yapın.</p>
+        <ul>
+            <li>Liste öğesi 1</li>
+            <li>Liste öğesi 2</li>
+            <li>Liste öğesi 3</li>
+        </ul>
+    </div>
+</body>
+</html>

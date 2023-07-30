@@ -1,0 +1,126 @@
+// actions.js
+
+export const ADD_NOTE = 'ADD_NOTE';
+export const FILTER_NOTES = 'FILTER_NOTES';
+
+export const addNote = (note, color) => {
+  return {
+    type: ADD_NOTE,
+    payload: {
+      note,
+      color,
+    }
+  };
+};
+
+export const filterNotes = (keyword) => {
+  return {
+    type: FILTER_NOTES,
+    payload: keyword,
+  };
+};
+
+
+// reducers.js
+
+import { ADD_NOTE, FILTER_NOTES } from './actions';
+
+const initialState = {
+  notes: [],
+  filteredNotes: [],
+};
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ADD_NOTE:
+      const newNote = {
+        id: Date.now(),
+        note: action.payload.note,
+        color: action.payload.color,
+      };
+      return {
+        ...state,
+        notes: [...state.notes, newNote],
+      };
+
+    case FILTER_NOTES:
+      const keyword = action.payload.toLowerCase();
+      const filteredNotes = state.notes.filter(note =>
+        note.note.toLowerCase().includes(keyword)
+      );
+      return {
+        ...state,
+        filteredNotes,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export default reducer;
+
+
+// App.js
+
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { addNote, filterNotes } from './actions';
+
+const App = ({ notes, filteredNotes, addNote, filterNotes }) => {
+  const [noteText, setNoteText] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
+
+  const handleAddNote = () => {
+    addNote(noteText, selectedColor);
+    setNoteText('');
+  };
+
+  const handleFilterNotes = (e) => {
+    filterNotes(e.target.value);
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={noteText}
+        onChange={(e) => setNoteText(e.target.value)}
+      />
+      <select
+        value={selectedColor}
+        onChange={(e) => setSelectedColor(e.target.value)}
+      >
+        <option value="">Select a color</option>
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+      </select>
+      <button onClick={handleAddNote}>Add Note</button>
+
+      <input
+        type="text"
+        placeholder="Filter Notes"
+        onChange={handleFilterNotes}
+      />
+
+      {filteredNotes.map(note => (
+        <div
+          key={note.id}
+          style={{ backgroundColor: note.color }}
+        >
+          {note.note}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const mapStateToProps = state => {
+  return {
+    notes: state.notes,
+    filteredNotes: state.filteredNotes,
+  };
+};
+
+export default connect(mapStateToProps, { addNote, filterNotes })(App);

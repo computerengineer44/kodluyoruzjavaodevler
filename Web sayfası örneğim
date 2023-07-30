@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>İlk Web Sayfam</title>
+</head>
+<body>
+    <!-- Ad-Soyad başlık etiketi -->
+    <h1>bugra-elbir</h1>
+
+    <!-- Hakkımda alt başlık etiketi -->
+    <h2>Hakkımda</h2>
+
+    <!-- Hakkımda paragrafı -->
+    <p>Havacılık, savunma sanayi ve siber güvenlik sektörleri ile ilgileniyorum.Bu alanlarda geliştirilmekte olan yazılım projelerinde çalışmak istiyorum. Sağlık -ürünlerinin teknolojik kullanım alanlarında kendimi geliştirip bu alanda da
+       ilerlemek istiyorum.Ayrıca türk müzik yazılımının eksikliğinin farkında olup milli müzik yazılımı üzerinde çalışıyorum. 4 yaşımdan beri piyano çalıyorum aynı zamanda ud ve gitar da çalıyorum. Müzik tasarım prodüksiyonu ile uğraşıyorum. Bisiklet sürmeyi, yüzmeyi ve basketbolu severim. Her konuda öğrenmeye açık, kendimi geliştirmeye açık birisiyim.Sosyal kişiliğim sayesinde bulunduğum ortama rahatlıkla adapte olabilirim.Liderlik ve yönetme duygusuyla bilinçli hareket birisiyim.Çalıştığım departmanlara ve kurumlara inovatif fikirler ile destek vermek,kariyerime farklı deneyimler kazandırmak istiyorum..</p>
+</body>
+</html>

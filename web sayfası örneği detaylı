@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Kişisel Sayfam</title>
+	<style>
+		.container {
+			max-width: 600px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		h1 {
+			text-align: center;
+		}
+
+		img {
+			display: block;
+			margin: 20px auto;
+			max-width: 100%;
+			height: auto;
+		}
+
+		ul {
+			list-style-type: disc;
+		}
+
+		li {
+			margin-bottom: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Hoş Geldiniz!</h1>
+
+		<img src="resim.jpg" alt="Bir resim açıklaması">
+
+		<h2>Film ve Diziler</h2>
+		<ul>
+			<li><a href="https://www.imdb.com/title/tt1375666/">Inception</a></li>
+			<li><a href="https://www.imdb.com/title/tt0944947/">Game of Thrones</a></li>
+		</ul>
+
+		<h2>Kitaplar</h2>
+		<ul>
+			<li><a href="https://www.goodreads.com/book/show/18619684-sapiens">Sapiens: Bir İnsanın Tüyleri Üzerindeki Düşünceler</a></li>
+			<li>Diğer kitaplar...</li>
+		</ul>
+	</div>
+</body>
+</html>

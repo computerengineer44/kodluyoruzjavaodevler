@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Google</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            margin: 150px auto;
+            text-align: center;
+        }
+
+        #logo {
+            width: 200px;
+            height: 70px;
+            background-image: url(google_logo.png); /* Logo resminin URL'sini buraya yerleştirin */
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-bottom: 20px;
+        }
+
+        #search-box {
+            width: 400px;
+            height: 30px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        #search-button {
+            display: inline-block;
+            background-color: #f2f2f2;
+            border: 1px solid #f2f2f2;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        #search-button:hover {
+            background-color: #e6e6e6;
+            border-color: #e6e6e6;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="logo"></div>
+        <form action="https://www.google.com/search" method="GET">
+            <input type="text" name="q" id="search-box" autofocus>
+            <br>
+            <input type="submit" value="Google'da Ara" id="search-button">
+        </form>
+    </div>
+</body>
+
+</html>

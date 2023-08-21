@@ -1,0 +1,85 @@
+class MemberAccount:
+    def __init__(self, id, name, surname, code, balance):
+        self.id = id
+        self.name = name
+        self.surname = surname
+        self.code = code
+        self.balance = balance
+
+class MemberAccountService:
+    def __init__(self):
+        self.accounts = []
+
+    def create_account(self, id, name, surname, code, balance):
+        account = MemberAccount(id, name, surname, code, balance)
+        self.accounts.append(account)
+
+    def get_account_by_code(self, code):
+        return next((account for account in self.accounts if account.code == code), None)
+
+    def update_account_balance(self, code, amount):
+        account = self.get_account_by_code(code)
+        if account:
+            account.balance += amount
+
+
+class Bill:
+    def __init__(self, amount, process_date, bill_type):
+        self.amount = amount
+        self.process_date = process_date
+        self.bill_type = bill_type
+
+
+class BillService:
+    def __init__(self):
+        self.bills = []
+
+    def create_bill(self, amount, process_date, bill_type):
+        bill = Bill(amount, process_date, bill_type)
+        self.bills.append(bill)
+
+    # Diğer CRUD işlemlerini de ekleyebilirsiniz.
+
+    def pay_bill(self, code, bill_type, amount):
+        account = member_account_service.get_account_by_code(code)
+        if not account:
+            raise CustomException("Hesap bulunamadı.")
+        bill = next((bill for bill in self.bills if bill.bill_type == bill_type), None)
+        if not bill:
+            raise CustomException("Fatura bulunamadı.")
+        if account.balance < amount:
+            raise CustomException("Yetersiz bakiye.")
+        account.balance -= amount
+        self.bills.remove(bill)
+
+
+class Client:
+    def __init__(self, code):
+        self.code = code
+
+    def pay_bill(self, bill_type, amount):
+        bill_service.pay_bill(self.code, bill_type, amount)
+
+
+class CustomException(Exception):
+    pass
+
+
+member_account_service = MemberAccountService()
+bill_service = BillService()
+
+# Hesap oluşturma
+member_account_service.create_account(id, name, surname, code, balance)
+
+# Fatura oluşturma
+bill_service.create_bill(amount, process_date, bill_type)
+
+# Fatura ödeme işlemi
+client = Client(code)
+client.pay_bill(bill_type, amount)
+
+# CustomException kullanımı
+try:
+    client.pay_bill(bill_type, amount)
+except CustomException as e:
+    print(str(e))

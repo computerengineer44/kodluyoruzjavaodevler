@@ -1,0 +1,63 @@
+1.film tablosunda bulunan ve film ismi (title) 'n' karakteri ile biten en uzun (length) 5 filmi sıralayınız.
+2.film tablosunda bulunan ve film ismi (title) 'n' karakteri ile biten en kısa (length) ikinci(6,7,8,9,10) 5 filmi(6,7,8,9,10) sıralayınız.
+3.customer tablosunda bulunan last_name sütununa göre azalan yapılan sıralamada store_id 1 olmak koşuluyla ilk 4 veriyi sıralayınız.
+
+
+##########
+Sorgu 1
+SELECT title, length
+FROM film
+WHERE title LIKE '%n'
+ORDER BY length DESC
+LIMIT 5;
+
+Sorgu Sonucu 1
+   title              | length
+--------------------+--------
+ Autobiography of a |     185
+ Cabin Boy          |     184
+ Onion               |     183
+ Courage Goodbye     |     183
+ Sweethearts Suspects|     183
+(5 rows)
+  
+#########
+Sorgu 2  
+SELECT title, length
+FROM film
+WHERE title LIKE '%n'
+ORDER BY length
+OFFSET 5
+LIMIT 5;
+
+Sorgu sonucu 2 
+        title         | length
+---------------------+--------
+... Grosseboecked... |     177
+ Annie Identity      |     177
+ Days Confused       |     177
+ Jedi Beneath        |     177
+ Perdition Fargo     |     177
+(5 rows)
+
+######
+
+Sorgu 3
+  
+SELECT first_name, last_name, store_id
+FROM customer
+WHERE store_id = 1
+ORDER BY last_name DESC
+LIMIT 4;
+
+ first_name |  last_name   | store_id
+------------+--------------+----------
+ Pamela     | Ziegler      |        1
+ Eleanor    | Zelaya       |        1
+ Florence   | Wood         |        1
+ Audrey     | Williamson   |        1
+(4 rows)
+
+##########
+
+

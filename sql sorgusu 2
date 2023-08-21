@@ -1,0 +1,47 @@
+Aşağıdaki sorgu senaryolarını dvdrental örnek veri tabanı üzerinden gerçekleştiriniz.
+
+film tablosunda bulunan rental_rate sütunundaki değerlerin ortalaması nedir?
+film tablosunda bulunan filmlerden kaç tanesi 'C' karakteri ile başlar?
+film tablosunda bulunan filmlerden rental_rate değeri 0.99 a eşit olan en uzun (length) film kaç dakikadır?
+film tablosunda bulunan filmlerin uzunluğu 150 dakikadan büyük olanlarına ait kaç farklı replacement_cost değeri vardır?
+
+########
+
+
+SELECT AVG(rental_rate) AS average_rental_rate
+FROM film;
+
+ average_rental_rate
+----------------------
+             2.980000
+(1 row)
+
+SELECT COUNT(*) AS count_starts_with_c
+FROM film
+WHERE title LIKE 'C%';
+
+ count_starts_with_c
+----------------------
+                  92
+(1 row)
+
+
+SELECT MAX(length) AS max_length_for_rate_099
+FROM film
+WHERE rental_rate = 0.99;
+
+ max_length_for_rate_099
+-------------------------
+                     185
+(1 row)
+
+SELECT COUNT(DISTINCT replacement_cost) AS distinct_replacement_costs
+FROM film
+WHERE length > 150;
+
+ distinct_replacement_costs
+----------------------------
+                         21
+(1 row)
+
+

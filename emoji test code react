@@ -1,0 +1,35 @@
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('Başlık kısmı başarılı bir şekilde render edilmeli', () => {
+  render(<App />);
+  const titleElement = screen.getByText(/Emoji Filter App/i);
+  expect(titleElement).toBeInTheDocument();
+});
+------------------------------------------------------------
+test('Emoji listesi başarılı bir şekilde render edilmeli', () => {
+  render(<App />);
+  const emojiList = screen.getByTestId('emoji-list');
+  expect(emojiList).toBeInTheDocument();
+});
+-----------------------------------------------------------------
+import userEvent from '@testing-library/user-event';
+
+test('Filtreleme işlemi doğru çalışmalı', () => {
+  render(<App />);
+  const inputElement = screen.getByPlaceholderText('Search Emoji');
+  userEvent.type(inputElement, 'heart');
+  
+  const filteredEmoji = screen.getByText('❤️');
+  expect(filteredEmoji).toBeInTheDocument();
+});
+---------------------------------------------------------------
+test('Emoji tıklama işlemi doğru çalışmalı', () => {
+  render(<App />);
+  const emojiElement = screen.getByText('❤️');
+  userEvent.click(emojiElement);
+  
+  const copiedText = screen.getByText('Emoji copied to clipboard: ❤️');
+  expect(copiedText).toBeInTheDocument();
+});

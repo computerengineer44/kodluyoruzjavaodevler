@@ -1,0 +1,103 @@
+npx create-react-app weather-app
+cd weather-app
+-----------------------------
+npm install axios
+----------------------------
+// src/context/WeatherContext.js
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+
+const WeatherContext = createContext();
+
+export const useWeather = () => {
+  return useContext(WeatherContext);
+};
+
+export const WeatherProvider = ({ children }) => {
+  const [weatherData, setWeatherData] = useState(null);
+  const [selectedCity, setSelectedCity] = useState('Istanbul'); // Varsayılan şehir
+
+  useEffect(() => {
+    // API'den hava durumu verilerini çekme işlemi
+    const fetchWeatherData = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.openweathermap.org/data/2.5/forecast?q=${selectedCity}&appid=API_KEY&units=metric`
+        );
+        setWeatherData(response.data);
+      } catch (error) {
+        console.error('Hava durumu verileri alınamadı.', error);
+      }
+    };
+
+    fetchWeatherData();
+  }, [selectedCity]);
+
+  return (
+    <WeatherContext.Provider value={{ weatherData, selectedCity, setSelectedCity }}>
+      {children}
+    </WeatherContext.Provider>
+  );
+};
+----------------------------------------------------------------------------------------------------------------------------------------
+// src/components/WeatherCard.js
+import React from 'react';
+
+const WeatherCard = ({ day, weatherIcon, maxTemp, minTemp }) => {
+  return (
+    <div className="weather-card">
+      <h2>{day}</h2>
+      <img src={weatherIcon} alt="Hava Durumu" />
+      <p>Max: {maxTemp}°C</p>
+      <p>Min: {minTemp}°C</p>
+    </div>
+  );
+};
+
+export default WeatherCard;
+---------------------------------------------------------------------------------------------------
+// src/components/CitySelector.js
+import React from 'react';
+
+const CitySelector = ({ cities, selectedCity, onCityChange }) => {
+  return (
+    <div className="city-selector">
+      <label htmlFor="city">Şehir Seçin: </label>
+      <select id="city" value={selectedCity} onChange={(e) => onCityChange(e.target.value)}>
+        {cities.map((city) => (
+          <option key={city} value={city}>
+            {city}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+export default CitySelector;
+-----------------------------------------------------------------------------
+// src/App.js
+import React from 'react';
+import './App.css';
+import { WeatherProvider } from './context/WeatherContext';
+import WeatherCard from './components/WeatherCard';
+import CitySelector from './components/CitySelector';
+
+function App() {
+  return (
+    <WeatherProvider>
+      <div className="App">
+        <header className="App-header">
+          <h1>Hava Durumu</h1>
+        </header>
+        <CitySelector cities={['Istanbul', 'Ankara', 'Izmir', 'Antalya']} />
+        {/* Hava durumu kartları burada kullanılacak */}
+      </div>
+    </WeatherProvider>
+  );
+}
+
+export default App;
+------------------------------------------------------------------------------
+npm start
+-------------------------------------------------------------------------

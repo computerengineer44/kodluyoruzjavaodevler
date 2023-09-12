@@ -1,0 +1,45 @@
+// server.js
+
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// Eğitim verilerini saklamak için örnek bir dizi
+const assignedCourses = [
+  { id: 1, title: 'Patika 101', content: [] },
+  { id: 2, title: 'Patika 102', content: [] },
+];
+
+// Veritabanı ve diğer gerekli ayarlamalar burada yapılabilir
+
+// Eğitmenlere atanan eğitimleri getir
+app.get('/assigned-courses', (req, res) => {
+  res.json(assignedCourses);
+});
+
+// İçerik eklemek için eğitimlere POST isteği
+app.post('/add-content/:courseId', (req, res) => {
+  const { courseId } = req.params;
+  const { title, description, youtubeLink, quizQuestions } = req.body;
+
+  // courseId'ye göre ilgili eğitimi bulun ve içerik ekleyin
+  const course = assignedCourses.find((c) => c.id === parseInt(courseId));
+  if (!course) {
+    return res.status(404).json({ error: 'Eğitim bulunamadı' });
+  }
+
+  const newContent = {
+    title,
+    description,
+    youtubeLink,
+    quizQuestions,
+  };
+
+  course.content.push(newContent);
+
+  res.json({ success: true, content: newContent });
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});

@@ -1,0 +1,116 @@
+HTML (index.html):
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saat ve Karşılama</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Hoş Geldiniz!</h1>
+        <p>Lütfen adınızı girin:</p>
+        <input type="text" id="nameInput">
+        <button id="submitButton">Gönder</button>
+        <div id="message"></div>
+        <div id="clock"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+CSS (styles.css):
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    margin: 100px auto;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+p {
+    font-size: 16px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#message {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+#clock {
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+JavaScript (script.js):
+document.addEventListener("DOMContentLoaded", function() {
+    const nameInput = document.getElementById("nameInput");
+    const submitButton = document.getElementById("submitButton");
+    const message = document.getElementById("message");
+    const clock = document.getElementById("clock");
+
+    submitButton.addEventListener("click", function() {
+        const name = nameInput.value.trim();
+        if (name === "") {
+            alert("Lütfen adınızı girin.");
+        } else {
+            const currentDate = new Date();
+            const hours = currentDate.getHours();
+            const minutes = currentDate.getMinutes();
+            const greeting = getGreeting(hours);
+
+            message.textContent = `${greeting}, ${name}!`;
+            clock.textContent = `${formatTime(hours)}:${formatTime(minutes)}`;
+        }
+    });
+
+    function getGreeting(hours) {
+        if (hours < 12) {
+            return "Günaydın";
+        } else if (hours < 18) {
+            return "İyi günler";
+        } else {
+            return "İyi akşamlar";
+        }
+    }
+
+    function formatTime(time) {
+        return time < 10 ? "0" + time : time;
+    }
+});

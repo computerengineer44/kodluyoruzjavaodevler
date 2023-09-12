@@ -1,0 +1,50 @@
+<!-- Bootstrap CSS -->
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  integrity="sha384-pzjw8f+ua9ZdyTCJT1Kg2F5J7p1U3w+nB+5lWw5TmN9vi6Ew5B6p2By5z0p5D6Ofi"
+  crossorigin="anonymous"
+>
+
+<!-- Bootstrap JavaScript ve jQuery (isteğe bağlı) -->
+<script
+  src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+  integrity="sha384-vFJXuSJphROIrBnz7yo7be/xC3JpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+  integrity="sha384-pzjw8f+ua9ZdyTCJT1Kg2F5J7p1U3w+nB+5lWw5TmN9vi6Ew5B6p2By5z0p5D6Ofi"
+  crossorigin="anonymous"
+></script>
+.navbar {
+  position: sticky;
+  top: 0;
+  border: none;
+}
+<input
+  type="text"
+  class="form-control mr-3"
+  placeholder="LinkedIn'de ara..."
+/>
+<a class="nav-link d-flex align-items-center" href="#">
+  <i class="fas fa-home mr-1"></i> Ana Sayfa
+</a>
+<div class="col-md-2">Sol Panel İçeriği</div>
+<div class="col-md-6">Orta Panel İçeriği</div>
+<div class="col-md-3">Sağ Panel İçeriği</div>
+<img
+  src="profil-foto.jpg"
+  alt="Profil Fotoğrafı"
+  class="img-fluid rounded-circle border border-white"
+/>
+.en-yeni {
+  position: sticky;
+  top: 4rem; /* Yukarıdan 4rem mesafe bırakın */
+  overflow: visible;
+}

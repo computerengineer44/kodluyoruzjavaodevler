@@ -1,0 +1,168 @@
+HTML (index.html):
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div class="input-container">
+            <input type="text" id="taskInput" placeholder="Yeni görev ekleyin...">
+            <button id="addTaskButton">Ekle</button>
+        </div>
+        <ul id="taskList"></ul>
+        <button id="clearCompletedButton">Tamamlananları Temizle</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+CSS (styles.css):
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #ccc;
+}
+
+#clearCompletedButton {
+    background-color: #dc3545;
+    margin-top: 20px;
+}
+
+JavaScript (script.js):
+document.addEventListener("DOMContentLoaded", function() {
+    const taskInput = document.getElementById("taskInput");
+    const addTaskButton = document.getElementById("addTaskButton");
+    const taskList = document.getElementById("taskList");
+    const clearCompletedButton = document.getElementById("clearCompletedButton");
+
+    // Local Storage'dan verileri al ve listeye ekle
+    const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    savedTasks.forEach(task => {
+        addTaskToList(task);
+    });
+
+    // Yeni görev ekleme işlevi
+    addTaskButton.addEventListener("click", function() {
+        const taskText = taskInput.value.trim();
+        if (taskText !== "") {
+            addTaskToList(taskText);
+            taskInput.value = "";
+            saveTasksToLocalStorage();
+        }
+    });
+
+    // Görevi listeye ekleme işlevi
+    function addTaskToList(taskText) {
+        const li = document.createElement("li");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        const label = document.createElement("label");
+        label.textContent = taskText;
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Sil";
+
+        li.appendChild(checkbox);
+        li.appendChild(label);
+        li.appendChild(deleteButton);
+        taskList.appendChild(li);
+
+        // Görevi silme işlevi
+        deleteButton.addEventListener("click", function() {
+            li.remove();
+            saveTasksToLocalStorage();
+        });
+
+        // Görevi tamamlama işlevi
+        checkbox.addEventListener("change", function() {
+            label.classList.toggle("completed");
+            saveTasksToLocalStorage();
+        });
+    }
+
+    // Tamamlanan görevleri temizleme işlevi
+    clearCompletedButton.addEventListener("click", function() {
+        const completedTasks = document.querySelectorAll(".completed");
+        completedTasks.forEach(task => {
+            task.parentElement.remove();
+        });
+        saveTasksToLocalStorage();
+    });
+
+    // Görevleri Local Storage'a kaydetme işlevi
+    function saveTasksToLocalStorage() {
+        const tasks = [];
+        const taskElements = document.querySelectorAll("li");
+        taskElements.forEach(task => {
+            tasks.push({
+                text: task.querySelector("label").textContent,
+                completed: task.querySelector("input").checked
+            });
+        });
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+});

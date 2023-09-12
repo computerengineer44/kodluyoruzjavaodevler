@@ -1,0 +1,80 @@
+<!-- Bootstrap CSS -->
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  integrity="sha384-pzjw8f+ua9ZdyTCJT1Kg2F5J7p1U3w+nB+5lWw5TmN9vi6Ew5B6p2By5z0p5D6Ofi"
+  crossorigin="anonymous"
+>
+
+<!-- Bootstrap JavaScript ve jQuery (isteğe bağlı) -->
+<script
+  src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+  integrity="sha384-vFJXuSJphROIrBnz7yo7be/xC3JpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+  integrity="sha384-pzjw8f+ua9ZdyTCJT1Kg2F5J7p1U3w+nB+5lWw5TmN9vi6Ew5B6p2By5z0p5D6Ofi"
+  crossorigin="anonymous"
+></script>
+body {
+  padding-top: 54px; /* Navbar'ın yüksekliği kadar boşluk bırakın */
+}
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff; /* Arka plan rengi beyaz yapın */
+}
+<a class="navbar-brand" href="#" style="margin-left: 192px;">Logo</a>
+<!-- ... -->
+<div class="d-flex ml-5">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Ara"
+    style="background-image: url('assets/search-icon.png');"
+  />
+</div>
+<div class="d-flex ml-auto mt-2 mt-sm-0">
+  <!-- Sağ menü içeriği burada -->
+</div>
+<div class="col-md-8 offset-md-4 mt-2">
+  <!-- İçerik alanı burada -->
+</div>
+.story-name {
+  text-align: center;
+}
+<div class="card">
+  <!-- ... -->
+  <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Başlık</h5>
+      <div class="dropdown">
+        <button
+          class="btn btn-link text-dark"
+          type="button"
+          id="dropdownMenuButton"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <!-- İçerik kartına eklenen menü -->
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Sil</a>
+          <a class="dropdown-item" href="#">Düzenle</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ... -->
+</div>

@@ -1,0 +1,176 @@
+HTML (index.html):
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asian Kitchen's Menu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <h2>Asian Kitchen's Menu</h2>
+        <div class="btn-container">
+            <button class="filter-btn" data-id="all">Tümü</button>
+            <button class="filter-btn" data-id="breakfast">Kahvaltı</button>
+            <button class="filter-btn" data-id="lunch">Öğle Yemeği</button>
+            <button class="filter-btn" data-id="shakes">Shakes</button>
+        </div>
+    </header>
+    <section class="section-center">
+        <div class="menu-container">
+            <!-- Menü öğeleri buraya eklenecek -->
+        </div>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>
+
+JavaScript (script.js):
+document.addEventListener("DOMContentLoaded", function () {
+    // Menü öğelerini tanımlayın (id, title, category, price, img, desc özelliklerine sahip objeler)
+    const menu = [
+        {
+            id: 1,
+            title: "Sushi",
+            category: "lunch",
+            price: 15.99,
+            img: "img/item-1.jpeg",
+            desc: "Lezzetli sushi çeşitleri."
+        },
+        // Diğer menü öğelerini buraya ekleyin
+    ];
+
+    const menuContainer = document.querySelector(".menu-container");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+
+    // Sayfa yüklendiğinde tüm menü öğelerini göster
+    displayMenuItems(menu);
+
+    // Filtreleme butonlarına tıklanınca ilgili kategorideki öğeleri göster
+    filterButtons.forEach(function (button) {
+        button.addEventListener("click", function (e) {
+            const category = e.currentTarget.getAttribute("data-id");
+            const filteredMenu = menu.filter(function (item) {
+                if (item.category === category || category === "all") {
+                    return item;
+                }
+            });
+            displayMenuItems(filteredMenu);
+        });
+    });
+
+    // Menü öğelerini ekranda gösteren işlev
+    function displayMenuItems(menuItems) {
+        let displayMenu = menuItems.map(function (item) {
+            return `
+                <article class="menu-item">
+                    <img src="${item.img}" alt="${item.title}" class="photo">
+                    <div class="item-info">
+                        <header>
+                            <h4>${item.title}</h4>
+                            <h4 class="price">$${item.price}</h4>
+                        </header>
+                        <p class="item-text">${item.desc}</p>
+                    </div>
+                </article>
+            `;
+        });
+        displayMenu = displayMenu.join("");
+        menuContainer.innerHTML = displayMenu;
+    }
+});
+
+CSS (styles.css):
+/* Genel sayfa stilini ayarlayın */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.header h2 {
+    margin: 0;
+}
+
+.btn-container {
+    margin-top: 1rem;
+}
+
+.filter-btn {
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    margin: 0.2rem;
+    cursor: pointer;
+}
+
+.filter-btn:hover {
+    background-color: #444;
+}
+
+.section-center {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Menü öğeleri stilini ayarlayın */
+.menu-container {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.menu-item {
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    transition: transform 0.3s;
+}
+
+.menu-item:hover {
+    transform: scale(1.02);
+}
+
+.photo {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+.item-info {
+    text-align: center;
+}
+
+.price {
+    color: #555;
+}
+
+.item-text {
+    color: #888;
+}
+
+/* Medya sorguları ekleyerek sayfa mobil uyumluluğunu artırabilirsiniz */
+@media (max-width: 768px) {
+    .menu-container {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    }
+
+    .menu-item {
+        max-width: 300px;
+    }
+}
+

@@ -1,0 +1,96 @@
+npm install redux react-redux
+----------------------------------
+// actions.js
+export const actionTypes = {
+  OPEN_CARD: 'OPEN_CARD',
+  CHECK_MATCH: 'CHECK_MATCH',
+  RESET_GAME: 'RESET_GAME',
+};
+
+export function openCard(card) {
+  return { type: actionTypes.OPEN_CARD, card };
+}
+
+export function checkMatch() {
+  return { type: actionTypes.CHECK_MATCH };
+}
+
+export function resetGame() {
+  return { type: actionTypes.RESET_GAME };
+}
+-------------------------------------------------
+// reducers.js
+import { actionTypes } from './actions';
+
+const initialState = {
+  frameworks: ['angular2', 'vue', 'react', 'grunt', 'phantomjs', 'ember', 'babel', 'ionic', 'gulp', 'meteor', 'yeoman', 'yarn', 'nodejs', 'bower', 'browserify'],
+  // Diğer başlangıç durumu özelliklerini burada tanımlayın
+};
+
+export default function gameReducer(state = initialState, action) {
+  switch (action.type) {
+    case actionTypes.OPEN_CARD:
+      // Kartı açma işlemini burada güncelleyin
+      return state;
+    case actionTypes.CHECK_MATCH:
+      // Eşleşmeyi kontrol etme işlemini burada güncelleyin
+      return state;
+    case actionTypes.RESET_GAME:
+      // Oyunu sıfırlama işlemini burada güncelleyin
+      return state;
+    default:
+      return state;
+  }
+}
+---------------------------------------
+// store.js
+import { createStore } from 'redux';
+import gameReducer from './reducers';
+
+const store = createStore(gameReducer);
+
+export default store;
+----------------------------------------------
+import { connect } from 'react-redux';
+import { openCard, checkMatch, resetGame } from './actions';
+
+class PlayGround extends React.Component {
+  // Bileşen kodu burada devam eder
+}
+
+const mapStateToProps = (state) => {
+  return {
+    // State'den gerekli özellikleri seçin
+  };
+};
+
+const mapDispatchToProps = {
+  openCard,
+  checkMatch,
+  resetGame,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlayGround);
+-----------------------------------------------------------------------------------------
+handleClick(name, index) {
+  if (this.props.openedFrameworks.length === 2) {
+    setTimeout(() => {
+      this.props.checkMatch();
+    }, 750);
+  } else {
+    let framework = {
+      name,
+      index,
+    };
+    let finalizedFrameworks = this.props.finalizedFrameworks;
+    let frameworks = this.props.openedFrameworks;
+    finalizedFrameworks[index].close = false;
+    frameworks.push(framework);
+    this.props.openCard(frameworks, finalizedFrameworks);
+    if (this.props.openedFrameworks.length === 2) {
+      setTimeout(() => {
+        this.props.checkMatch();
+      }, 750);
+    }
+  }
+}

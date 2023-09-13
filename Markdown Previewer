@@ -1,0 +1,68 @@
+import React, { Component } from 'react';
+import marked from 'marked';
+
+class MarkdownPreviewer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      markdownText: '', // Markdown metni burada saklanır
+    };
+  }
+
+  // Markdown metni girdikçe state güncellenir
+  handleMarkdownChange = (e) => {
+    this.setState({ markdownText: e.target.value });
+  };
+
+  // Örnek Markdown ve ön izleme gösterme işlevi
+  showExampleMarkdown = () => {
+    const exampleMarkdown = `# Örnek Başlık
+
+Bu bir **örnek** [Markdown](https://daringfireball.net/projects/markdown/) metnidir.
+
+- Liste öğesi 1
+- Liste öğesi 2
+- Liste öğesi 3
+
+\`\`\`
+function example() {
+  console.log('Merhaba, dünya!');
+}
+\`\`\`
+
+> Alıntı
+
+Örnek resim:
+![React Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png)
+`;
+
+    this.setState({ markdownText: exampleMarkdown });
+  };
+
+  render() {
+    const { markdownText } = this.state;
+    const previewedMarkdown = marked(markdownText, { sanitize: true });
+
+    return (
+      <div className="markdown-previewer">
+        <div className="markdown-input">
+          <h2>Markdown Metni</h2>
+          <textarea
+            value={markdownText}
+            onChange={this.handleMarkdownChange}
+            placeholder="Markdown metni girin..."
+          />
+          <button onClick={this.showExampleMarkdown}>Örnek Göster</button>
+        </div>
+        <div className="markdown-output">
+          <h2>Ön İzleme</h2>
+          <div
+            dangerouslySetInnerHTML={{ __html: previewedMarkdown }}
+          />
+        </div>
+      </div>
+    );
+  }
+}
+
+export default MarkdownPreviewer;

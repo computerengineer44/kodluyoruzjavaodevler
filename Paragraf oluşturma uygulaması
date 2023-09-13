@@ -1,0 +1,85 @@
+import React, { Component } from 'react';
+
+class ParagraphGenerator extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      paragraphCount: 4, // Başlangıçta 4 paragraf gösterilsin
+      selectedParagraphs: [],
+      displayAsHTML: false,
+    };
+  }
+
+  componentDidMount() {
+    this.generateParagraphs();
+  }
+
+  // Paragraf sayısını güncellemek için kullanılan işlev
+  handleParagraphCountChange = (e) => {
+    this.setState({ paragraphCount: parseInt(e.target.value, 10) }, () => {
+      this.generateParagraphs();
+    });
+  };
+
+  // Paragraf türünü (text veya html) güncellemek için kullanılan işlev
+  handleDisplayTypeChange = (e) => {
+    this.setState({ displayAsHTML: e.target.value === 'html' }, () => {
+      this.generateParagraphs();
+    });
+  };
+
+  // API'den paragrafları almak için kullanılan işlev
+  generateParagraphs = () => {
+    const { paragraphCount, displayAsHTML } = this.state;
+    const apiUrl = `https://example-api.com/api?paras=${paragraphCount}&type=${displayAsHTML ? 'html' : 'text'}`;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ selectedParagraphs: data.paragraphs });
+      })
+      .catch((error) => {
+        console.error('API Error:', error);
+      });
+  };
+
+  render() {
+    const { paragraphCount, selectedParagraphs, displayAsHTML } = this.state;
+
+    return (
+      <div>
+        <h1>Paragraf Oluşturucu</h1>
+        <div>
+          <label>Paragraf Sayısı:</label>
+          <input
+            type="number"
+            min="1"
+            value={paragraphCount}
+            onChange={this.handleParagraphCountChange}
+          />
+        </div>
+        <div>
+          <label>Görüntüleme Türü:</label>
+          <select onChange={this.handleDisplayTypeChange}>
+            <option value="text">Düz Metin</option>
+            <option value="html">HTML</option>
+          </select>
+        </div>
+        <div>
+          <h2>Seçilen Paragraflar:</h2>
+          {selectedParagraphs.map((paragraph, index) => (
+            <div key={index}>
+              {displayAsHTML ? (
+                <div dangerouslySetInnerHTML={{ __html: paragraph }} />
+              ) : (
+                <p>{paragraph}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+}
+
+export default ParagraphGenerator;

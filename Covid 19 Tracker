@@ -1,0 +1,128 @@
+import React, { Component } from 'react';
+import axios from 'axios';
+import Chart from './Chart'; // Verileri grafik olarak göstermek için kullanılacak bileşen
+
+class Covid19Tracker extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      globalData: {}, // Tüm dünya genelindeki veriler
+      selectedCountry: 'world', // Başlangıçta tüm dünya verilerini göster
+      countryData: {}, // Seçilen ülkenin verileri
+      countries: [], // Ülkelerin listesi
+      lastUpdated: '', // Son güncelleme tarihi
+    };
+  }
+
+  componentDidMount() {
+    this.fetchGlobalData();
+    this.fetchCountries();
+  }
+
+  // Tüm dünya genelindeki verileri getirme
+  fetchGlobalData() {
+    axios.get('https://api.example.com/global-data')
+      .then((response) => {
+        this.setState({
+          globalData: response.data,
+          lastUpdated: response.data.last_updated,
+        });
+      })
+      .catch((error) => {
+        console.error('API Error:', error);
+      });
+  }
+
+  // Ülkeleri getirme
+  fetchCountries() {
+    axios.get('https://api.example.com/countries')
+      .then((response) => {
+        this.setState({ countries: response.data });
+      })
+      .catch((error) => {
+        console.error('API Error:', error);
+      });
+  }
+
+  // Ülke seçildiğinde ilgili ülkenin verilerini getirme
+  handleCountryChange = (e) => {
+    const selectedCountry = e.target.value;
+    this.setState({ selectedCountry });
+    if (selectedCountry !== 'world') {
+      this.fetchCountryData(selectedCountry);
+    } else {
+      this.setState({ countryData: {} });
+    }
+  };
+
+  // İlgili ülkenin verilerini getirme
+  fetchCountryData(selectedCountry) {
+    axios.get(`https://api.example.com/countries/${selectedCountry}`)
+      .then((response) => {
+        this.setState({ countryData: response.data });
+      })
+      .catch((error) => {
+        console.error('API Error:', error);
+      });
+  }
+
+  render() {
+    const { globalData, selectedCountry, countries, countryData, lastUpdated } = this.state;
+
+    return (
+      <div className="covid19-tracker">
+        <h1>COVID-19 Takip Uygulaması</h1>
+        <div className="data-cards">
+          <div className="data-card">
+            <h2>Enfekte Olan</h2>
+            <p>{globalData.total_infected}</p>
+            <p>Son Güncelleme: {lastUpdated}</p>
+          </div>
+          <div className="data-card">
+            <h2>İyileşen</h2>
+            <p>{globalData.total_recovered}</p>
+            <p>Son Güncelleme: {lastUpdated}</p>
+          </div>
+          <div className="data-card">
+            <h2>Ölen</h2>
+            <p>{globalData.total_deaths}</p>
+            <p>Son Güncelleme: {lastUpdated}</p>
+          </div>
+          <div className="data-card">
+            <h2>Aktif Hasta</h2>
+            <p>{globalData.active_cases}</p>
+            <p>Son Güncelleme: {lastUpdated}</p>
+          </div>
+        </div>
+        <div className="country-selector">
+          <label>Ülke Seç:</label>
+          <select value={selectedCountry} onChange={this.handleCountryChange}>
+            <option value="world">Tüm Dünya</option>
+            {countries.map((country) => (
+              <option key={country.code} value={country.code}>
+                {country.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        {selectedCountry !== 'world' && (
+          <div className="country-details">
+            <h2>{countryData.name} Detayları</h2>
+            <p>Toplam Enfekte: {countryData.total_infected}</p>
+            <p>Toplam İyileşen: {countryData.total_recovered}</p>
+            <p>Toplam Ölen: {countryData.total_deaths}</p>
+            <p>Aktif Hasta: {countryData.active_cases}</p>
+            <p>Son Güncelleme: {lastUpdated}</p>
+          </div>
+        )}
+        <div className="chart">
+          {selectedCountry === 'world' && (
+            <Chart data={globalData.chart_data} />
+          )}
+        </div>
+      </div>
+    );
+  }
+}
+
+export default Covid19Tracker;

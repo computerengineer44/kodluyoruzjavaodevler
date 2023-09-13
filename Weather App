@@ -1,0 +1,92 @@
+import React, { Component } from 'react';
+import axios from 'axios';
+
+class WeatherApp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cityName: 'Istanbul', // Varsayılan olarak Istanbul hava durumu
+      weatherData: null, // Hava durumu verileri
+      loading: true,
+      error: null,
+    };
+  }
+
+  componentDidMount() {
+    this.getWeatherData();
+  }
+
+  // Hava durumu verilerini API'den çekme
+  getWeatherData = () => {
+    const apiKey = 'YOUR_API_KEY'; // OpenWeather API key
+    const { cityName } = this.state;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName},TR&appid=${apiKey}&units=metric`;
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        this.setState({
+          weatherData: response.data,
+          loading: false,
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          error: 'Hava durumu verileri alınamıyor.',
+          loading: false,
+        });
+      });
+  };
+
+  // Şehir değiştiğinde hava durumu verilerini güncelleme
+  handleCityChange = (e) => {
+    const cityName = e.target.value;
+    this.setState({ cityName, loading: true }, () => {
+      this.getWeatherData();
+    });
+  };
+
+  render() {
+    const { cityName, weatherData, loading, error } = this.state;
+
+    return (
+      <div className="weather-app">
+        <h1>Türkiye Hava Durumu</h1>
+        <div className="city-selector">
+          <label>Şehir Seç:</label>
+          <select value={cityName} onChange={this.handleCityChange}>
+            <option value="Istanbul">Istanbul</option>
+            <option value="Ankara">Ankara</option>
+            <option value="Izmir">Izmir</option>
+            {/* Daha fazla şehir ekleyebilirsiniz */}
+          </select>
+        </div>
+        {loading ? (
+          <p>Hava durumu verileri yükleniyor...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <div className="weather-data">
+            {weatherData && weatherData.list && weatherData.list.length > 0 ? (
+              weatherData.list.map((data, index) => (
+                <div className="weather-card" key={index}>
+                  <p>{data.dt_txt}</p>
+                  <img
+                    src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
+                    alt={data.weather[0].description}
+                  />
+                  <p>{data.weather[0].description}</p>
+                  <p>Sıcaklık: {data.main.temp} °C</p>
+                </div>
+              ))
+            ) : (
+              <p>Hava durumu verileri bulunamadı.</p>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
+}
+
+export default WeatherApp;

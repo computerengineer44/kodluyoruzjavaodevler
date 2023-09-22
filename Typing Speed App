@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hız Testi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #word {
+            font-size: 24px;
+            margin-top: 30px;
+        }
+        #input {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        #timer {
+            font-size: 36px;
+            margin-top: 20px;
+        }
+        #result {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .correct {
+            color: green;
+        }
+        .wrong {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="word"></div>
+    <input type="text" id="input" autocomplete="off" autofocus>
+    <div id="timer">60</div>
+    <div id="result"></div>
+    <button id="restart" style="display: none;">Restart</button>
+
+    <script>
+        const words = ["merhaba", "hız", "testi", "uygulama", "javascript", "programlama"]; // Örnek kelimeler
+        let wordIndex = 0;
+        let correctWords = 0;
+        let timer = 60;
+        let countdown;
+        let gameActive = false;
+
+        const wordDisplay = document.getElementById("word");
+        const inputField = document.getElementById("input");
+        const timerDisplay = document.getElementById("timer");
+        const resultDisplay = document.getElementById("result");
+        const restartButton = document.getElementById("restart");
+
+        function startGame() {
+            gameActive = true;
+            countdown = setInterval(updateTimer, 1000);
+            inputField.addEventListener("input", checkInput);
+            showWord();
+        }
+
+        function updateTimer() {
+            timer--;
+            timerDisplay.textContent = timer;
+            if (timer === 0) {
+                endGame();
+            }
+        }
+
+        function showWord() {
+            const word = words[wordIndex];
+            wordDisplay.textContent = word;
+        }
+
+        function checkInput() {
+            const typedWord = inputField.value.trim();
+            const currentWord = words[wordIndex];
+
+            if (typedWord === currentWord) {
+                wordIndex++;
+                inputField.value = "";
+                correctWords++;
+                wordDisplay.classList.add("correct");
+                wordDisplay.classList.remove("wrong");
+            } else {
+                wordDisplay.classList.add("wrong");
+                wordDisplay.classList.remove("correct");
+            }
+
+            if (wordIndex < words.length) {
+                showWord();
+            } else {
+                endGame();
+            }
+        }
+
+        function endGame() {
+            gameActive = false;
+            clearInterval(countdown);
+            inputField.removeEventListener("input", checkInput);
+            inputField.disabled = true;
+            restartButton.style.display = "block";
+            resultDisplay.textContent = `Oyun bitti! ${correctWords} doğru cevap aldınız.`;
+        }
+
+        restartButton.addEventListener("click", () => {
+            location.reload();
+        });
+
+        startGame();
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+import React, { useState } from "react";
+import "./App.css";
+
+function App() {
+  const initialBalance = 100000000000;
+  const [balance, setBalance] = useState(initialBalance);
+  const [products, setProducts] = useState([
+    { name: "Hayali Ürün 1", price: 10000000, quantity: 0 },
+    { name: "Hayali Ürün 2", price: 5000000, quantity: 0 },
+    { name: "Hayali Ürün 3", price: 2000000, quantity: 0 },
+  ]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleBuy = () => {
+    if (selectedProduct && balance >= selectedProduct.price) {
+      const updatedProducts = products.map((product) => {
+        if (product === selectedProduct) {
+          return { ...product, quantity: product.quantity + 1 };
+        }
+        return product;
+      });
+
+      setProducts(updatedProducts);
+      setBalance(balance - selectedProduct.price);
+    }
+  };
+
+  const handleSell = () => {
+    if (selectedProduct && selectedProduct.quantity > 0) {
+      const updatedProducts = products.map((product) => {
+        if (product === selectedProduct) {
+          return { ...product, quantity: product.quantity - 1 };
+        }
+        return product;
+      });
+
+      setProducts(updatedProducts);
+      setBalance(balance + selectedProduct.price);
+    }
+  };
+
+  return (
+    <div className="App">
+      <h1>Bill Gates'in Hayali Ürün Mağazası</h1>
+      <p>Bakiye: ${balance}</p>
+
+      <div className="product-list">
+        {products.map((product, index) => (
+          <div
+            key={index}
+            className={`product ${product.price > balance ? "disabled" : ""}`}
+            onClick={() => setSelectedProduct(product)}
+          >
+            <p>{product.name}</p>
+            <p>Fiyat: ${product.price}</p>
+            <p>Adet: {product.quantity}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="controls">
+        <button onClick={handleBuy} disabled={!selectedProduct || selectedProduct.price > balance}>
+          Satın Al
+        </button>
+        <button onClick={handleSell} disabled={!selectedProduct || selectedProduct.quantity === 0}>
+          Sat
+        </button>
+      </div>
+
+      <div className="basket">
+        <h2>Sepet</h2>
+        <ul>
+          {products.map((product, index) => (
+            <li key={index}>
+              {product.name} x {product.quantity} - Toplam: ${product.quantity * product.price}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default App;
